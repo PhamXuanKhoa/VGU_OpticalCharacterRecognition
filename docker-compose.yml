@@ -26,6 +26,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+    env_file:
+      - ./frontend/.env.template
     networks:
       - app-network
 
