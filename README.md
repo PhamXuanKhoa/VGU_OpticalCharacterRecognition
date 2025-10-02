@@ -89,7 +89,7 @@ To stop and remove the running containers, networks, and volumes created by `doc
 docker-compose down
 ```
 
-### Credits
+## Credits
 
 This project would not have been possible without the help of these amazing individuals:
 
