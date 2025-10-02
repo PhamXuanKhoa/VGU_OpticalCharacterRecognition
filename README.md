@@ -1,6 +1,6 @@
 # 📝 VGU_OpticalCharacterRecognition
 
-Welcome to Project OCR Main! This is a full-stack powerhouse for Optical Character Recognition (OCR) and document processing. 🧠✨ We've combined a slick Python FastAPI backend with a stunning React/Vite frontend to bring you a seamless experience.
+Welcome to VGU_OpticalCharacterRecognition! This is a full-stack powerhouse for Optical Character Recognition (OCR) and document processing. 🧠✨ We've combined a slick Python FastAPI backend with a stunning React/Vite frontend to bring you a seamless experience.
 
 Got an image with text? Upload it! 🖼️ Want to extract text, pinpoint keywords, find related articles, and get a neat summary? You're in the right place. ✅
 
