@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-multipart
+pydantic
+google-generativeai
+google-api-python-client
+requests
+beautifulsoup4
+google-genai
+nltk 
+Pillow
+vietocr
+torch
+torchvision

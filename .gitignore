@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.Python
+.venv/
+virtualenv/
+venv/
+
+# Node.js
+node_modules/
+dist/
+build/
+.npm/
+.yarn/
+
+# Exclude root .env (for backend API keys)
+/.env
+
+# Docker
+*.log
+*.tmp
+
+# IDEs
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
