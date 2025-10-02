@@ -30,8 +30,6 @@ This project is a full-stack application designed for Optical Character Recognit
 *   **Tailwind CSS / Shadcn UI:** For styling and UI components.
 *   **XMLHttpRequest:** For making API calls.
 
-(Credit: https://github.com/PhamXuanKhoa)
-
 **Deployment:**
 *   **Docker:** Containerization platform.
 *   **Docker Compose:** Tool for defining and running multi-container Docker applications.
