@@ -81,7 +81,7 @@ docker-compose up --build -d
 Once everything is up and running:
 
 *   **Frontend:** 🖥️ Open your browser and navigate to `http://localhost:5173`.
-*   **Backend API (FastAPI Docs):** 📄 Check out the backend documentation at `http://localhost:8000/docs`.
+*   **Backend API (FastAPI Docs):** 📄 Check out the backend's Swagger UI at `http://localhost:8000/docs`.
 
 ### **5. Stop the Application**
 
