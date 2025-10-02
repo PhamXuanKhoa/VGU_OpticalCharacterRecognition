@@ -89,4 +89,9 @@ To stop and remove the running containers, networks, and volumes created by `doc
 docker-compose down
 ```
 
+## 6. Credits
 
+This project would not have been possible without the help of these amazing individuals:
+
+-   **@minhle-120:** Developed the FastAPI backend and OCR engines.
+-   **@PhamXuanKhoa:** Designed the entire UI/UX and created the React components.
