@@ -15,6 +15,8 @@ RUN npm install
 # Copy the rest of the application's code
 COPY . .
 
+COPY .env.template .env
+
 # Make port 5173 available to the world outside this container
 EXPOSE 5173
 
