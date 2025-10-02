@@ -81,7 +81,7 @@ docker-compose up --build -d
 Once everything is up and running:
 
 *   **Frontend:** 🖥️ Open your browser and navigate to `http://localhost:5173`.
-*   **Backend API (FastAPI Docs):** 📄 Check out the backend documentation at `http://localhost:8000/docs`.
+*   **Backend API (FastAPI Docs):** 📄 Check out the backend's Swagger UI at `http://localhost:8000/docs`.
 
 ### **5. Stop the Application**
 
@@ -97,4 +97,4 @@ This will stop and remove the containers, networks, and volumes.
 This project is brought to you by the combined efforts of these awesome people:
 
 -   **@minhle-120:** The mastermind behind the FastAPI backend and OCR engines. 🧑‍💻
--   **@PhamXuanKhoa:** The creative genius who designed the entire UI/UX and built the React components. 🎨
+-   **[@PhamXuanKhoa] (https://www.github.com/PhamXuanKhoa):** The creative genius who designed the entire UI/UX and built the React components. 🎨
