@@ -1,92 +1,100 @@
-# Project OCR Main
+# 📝 VGU_OpticalCharacterRecognition
 
-This project is a full-stack application designed for Optical Character Recognition (OCR) and document processing, featuring a Python FastAPI backend and a React/Vite frontend. It allows users to upload images, select various OCR, NLP, search, and summarization engines, and then process the document to extract text, keywords, related links, and a final summary.
+Welcome to VGU_OpticalCharacterRecognition! This is a full-stack powerhouse for Optical Character Recognition (OCR) and document processing. 🧠✨ We've combined a slick Python FastAPI backend with a stunning React/Vite frontend to bring you a seamless experience.
 
-## Features
+Got an image with text? Upload it! 🖼️ Want to extract text, pinpoint keywords, find related articles, and get a neat summary? You're in the right place. ✅
 
-*   **Image Upload:** Upload images for OCR processing.
-*   **Dynamic Engine Selection:** Choose from various OCR, NLP, search, and summarization engines (including dummy, Gemini, Google Search, DuckDuckGo, and VietOCR).
-*   **Text Extraction:** Extract text content from uploaded images.
-*   **Keyword Identification:** Identify key terms and phrases using NLP engines.
-*   **Document Linking:** Find related documents or articles based on extracted keywords.
-*   **Content Summarization:** Generate summaries of processed content.
-*   **Dockerized Deployment:** Easy setup and deployment using Docker and Docker Compose.
+## ✨ Features
 
-## Technologies Used
+*   **Image Upload:** 📤 Pop your images in for some OCR magic.
+*   **Dynamic Engine Selection:** ⚙️ Your choice of OCR, NLP, search, and summarization engines. We've got dummy engines for testing, and heavy-hitters like Gemini, Google Search, DuckDuckGo, and VietOCR.
+*   **Text Extraction:** ✍️ Pull text from your images with ease.
+*   **Keyword Identification:** 🔑 Use NLP engines to find the key terms and phrases that matter.
+*   **Document Linking:** 🔗 Discover related documents and articles based on extracted keywords.
+*   **Content Summarization:** 📚 Get the gist of your content with automatically generated summaries.
+*   **Dockerized Deployment:** 🐳 Easy-peasy setup and deployment with Docker and Docker Compose.
 
-**Backend:**
-*   **Python 3.10:** Programming language.
-*   **FastAPI:** Web framework for building APIs.
-*   **Uvicorn:** ASGI server for running FastAPI.
-*   **Google Generative AI (Gemini API):** For advanced NLP, OCR, and summarization capabilities.
-*   **VietOCR:** For Vietnamese OCR.
-*   **Requests, BeautifulSoup4:** For web scraping/search.
-*   **Pillow:** Image processing library.
+## 🛠️ Technologies Used
 
-**Frontend:**
-*   **React:** JavaScript library for building user interfaces.
-*   **Vite:** Fast frontend build tool.
-*   **TypeScript:** Typed superset of JavaScript.
-*   **Tailwind CSS / Shadcn UI:** For styling and UI components.
-*   **XMLHttpRequest:** For making API calls.
+### **Backend:**
+*   **Python 3.10:** 🐍 The brains of the operation.
+*   **FastAPI:** ⚡ A lightning-fast web framework for building APIs.
+*   **Uvicorn:** 🦄 An ASGI server to keep FastAPI running smoothly.
+*   **Google Generative AI (Gemini API):** 🤖 For next-level NLP, OCR, and summarization.
+*   **VietOCR:** 🇻🇳 Specialized for Vietnamese OCR.
+*   **Requests, BeautifulSoup4:** 🕸️ Our tools for web scraping and searching.
+*   **Pillow:** 🖼️ For all your image processing needs.
 
-**Deployment:**
-*   **Docker:** Containerization platform.
-*   **Docker Compose:** Tool for defining and running multi-container Docker applications.
+### **Frontend:**
+*   **React:** ⚛️ Building beautiful and responsive user interfaces.
+*   **Vite:** 🚀 A frontend build tool that's fast.
+*   **TypeScript:** ⌨️ Because we like our JavaScript with types.
+*   **Tailwind CSS / Shadcn UI:** 🎨 For styling and UI components that pop.
+*   **XMLHttpRequest:** 📞 Making those all-important API calls.
 
-## Setup and Local Development
+### **Deployment:**
+*   **Docker:** 📦 Containerization for consistency and ease.
+*   **Docker Compose:** 🎼 Orchestrating our multi-container Docker applications.
 
-Follow these steps to get the project up and running on your local machine using Docker Compose.
+## 🚀 Setup and Local Development
 
-### Prerequisites
+Ready to get this project running on your local machine? Let's do it!
 
-*   [Docker Desktop](https://www.docker.com/products/docker-desktop) (includes Docker Engine and Docker Compose) installed and running.
-*   Git installed.
+### **Prerequisites**
 
-### 1. Clone the Repository
+*   [Docker Desktop](https://www.docker.com/products/docker-desktop) (Docker Engine and Docker Compose included) up and running.
+*   Git installed and ready to go.
+
+### **1. Clone the Repository**
 
 ```bash
 git clone https://github.com/minhle-120/VGU_OCR.git
 cd VGU_OCR
 ```
 
-### 2. Configure Environment Variables
+### **2. Configure Environment Variables**
 
 *   **For the Backend (`.env` in the project root):**
-    This file contains sensitive API keys for the backend.
-    Create a file named `.env` in the root directory of the project (`VGU_OCR/`).
+    This file is for your secret API keys. 🤫
+    Create a new file named `.env` in the root directory of the project (`VGU_OCR/`).
+
     ```
     GEMINI_API_KEY=your_gemini_api_key_here
     GOOGLE_API_KEY=key
     GOOGLE_CSE_ID=key
     ```
-    **Note:** Replace `your_gemini_api_key_here` and `your_secret_key_here` with your actual keys. This file is `.gitignore` and should not be committed to version control.
+    **Note:** Don't forget to replace `your_gemini_api_key_here` and the other keys with your actual credentials. This file is listed in `.gitignore`, so it won't be committed.
 
+### **3. Build and Run with Docker Compose**
 
-### 3. Build and Run with Docker Compose
-
-Navigate to the root of your project (`VGU_OCR/`) in your terminal and run:
+Head to the root of your project (`VGU_OCR/`) in your terminal and fire away:
 
 ```bash
 docker-compose up --build -d
 ```
 
-*   `--build`: This command builds the Docker images for both backend and frontend services. You only need to run this the first time or after making changes to Dockerfiles or dependencies.
-*   `-d`: Runs the services in detached mode (in the background).
+*   `--build`: This will build the Docker images for both the backend and frontend. You'll only need to do this the first time or when you change the Dockerfiles or dependencies.
+*   `-d`: This runs the services in detached mode, so they'll hum along in the background.
 
-### 4. Access the Application
+### **4. Access the Application**
 
-Once the services are up:
+Once everything is up and running:
 
-*   **Frontend:** Open your web browser and go to `http://localhost:5173`.
-*   **Backend API (FastAPI Docs):** Open your web browser and go to `http://localhost:8000/docs`.
+*   **Frontend:** 🖥️ Open your browser and navigate to `http://localhost:5173`.
+*   **Backend API (FastAPI Docs):** 📄 Check out the backend documentation at `http://localhost:8000/docs`.
 
-### 5. Stop the Application
+### **5. Stop the Application**
 
-To stop and remove the running containers, networks, and volumes created by `docker-compose`:
+When you're ready to shut things down, run:
 
 ```bash
 docker-compose down
 ```
+This will stop and remove the containers, networks, and volumes.
 
+## 🙏 Credits
 
+This project is brought to you by the combined efforts of these awesome people:
+
+-   **@minhle-120:** The mastermind behind the FastAPI backend and OCR engines. 🧑‍💻
+-   **@PhamXuanKhoa:** The creative genius who designed the entire UI/UX and built the React components. 🎨
