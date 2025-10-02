@@ -97,4 +97,4 @@ This will stop and remove the containers, networks, and volumes.
 This project is brought to you by the combined efforts of these awesome people:
 
 -   **@minhle-120:** The mastermind behind the FastAPI backend and OCR engines. 🧑‍💻
--   **@PhamXuanKhoa:** The creative genius who designed the entire UI/UX and built the React components. 🎨
+-   **[@PhamXuanKhoa] (https://www.github.com/PhamXuanKhoa):** The creative genius who designed the entire UI/UX and built the React components. 🎨
