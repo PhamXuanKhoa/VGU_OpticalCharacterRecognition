@@ -70,7 +70,7 @@ cd VGU_OCR
 Head to the root of your project (`VGU_OCR/`) in your terminal and fire away:
 
 ```bash
-docker-compose up --build -d
+docker-compose up --build
 ```
 
 *   `--build`: This will build the Docker images for both the backend and frontend. You'll only need to do this the first time or when you change the Dockerfiles or dependencies.
