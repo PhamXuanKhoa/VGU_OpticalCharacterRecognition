@@ -28,7 +28,7 @@ class GeminiOCREngine(OCREngine):
                 )
                 
                 prompt_parts = [
-                    "Please extract all the text from this image. If there is no text, say 'No text found.'",
+                    "Please extract all the text from this image. If there is no text, say 'No text found.'. DO NOT SAY ANYTHING ELSE EXCEPT THE TEXT IN THE IMAGE",
                     image_part,
                 ]
 
