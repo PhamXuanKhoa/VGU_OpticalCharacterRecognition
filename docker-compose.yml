@@ -8,10 +8,10 @@ services:
     container_name: fastapi_backend_dev
     ports:
       - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=key # Replace with your actual Gemini API key
     volumes:
       - ./backend/app:/app/app
-    env_file:
-      - .env  # <-- Add this line
     networks:
       - app-network
 
@@ -26,8 +26,8 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
-    env_file:
-      - ./frontend/.env.template
+    environment:
+      - VITE_API_URL=http://localhost:8000/
     networks:
       - app-network
 
