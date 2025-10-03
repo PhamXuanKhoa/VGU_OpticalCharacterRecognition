@@ -13,6 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt --extra-index-url https://dow
 # Copy the rest of the application's code
 COPY . .
 
+# Download VietOCR model during build
+RUN python /app/download_vietocr_model.py
+RUN rm /app/download_vietocr_model.py
+
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
