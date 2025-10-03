@@ -10,13 +10,14 @@ services:
       - "8000:8000"
     environment:
       - GEMINI_API_KEY=key # Replace with your actual Gemini API key
+      - GOOGLE_API_KEY=key #For google search engine
+      - GOOGLE_CSE_ID=key #For google seach engine
     volumes:
       - ./backend/app:/app/app
     networks:
       - app-network
 
   frontend:
-    # ... frontend configuration remains the same
     build:
       context: ./frontend
       dockerfile: Dockerfile
