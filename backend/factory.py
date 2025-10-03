@@ -24,7 +24,7 @@ OCR_ENGINES = {
     "gemini": GeminiOCREngine,
     "vietocr": VietOCRCroppingEngine,
     "vietocr_raw": VietOCRRawEngine,
-    "pytesseract_viet": PytesseractOCREngine
+    "tesseract_viet": PytesseractOCREngine
 }
 
 NLP_ENGINES = {
