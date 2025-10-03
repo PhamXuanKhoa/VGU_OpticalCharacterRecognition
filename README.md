@@ -98,3 +98,7 @@ This project is brought to you by the combined efforts of these awesome people:
 
 -   **[@minhle-120] (https://github.com/minhle-120):** The mastermind behind the FastAPI backend and OCR engines. 🧑‍💻
 -   **[@PhamXuanKhoa] (https://www.github.com/PhamXuanKhoa):** The creative genius who designed the entire UI/UX and built the React components. 🎨
+
+## ⚠️ Disclaimer
+
+Please note that this project has been developed solely for academic and educational purposes. It is not intended for, and should not be used in, a production environment. The software is provided "as is" and may contain bugs, errors, and security vulnerabilities. The developers assume no liability for any issues that may arise from its use.
