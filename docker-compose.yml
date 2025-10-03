@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   backend:
@@ -11,7 +11,7 @@ services:
     volumes:
       - ./backend/app:/app/app
     env_file:
-      - ./.env  # <-- Add this line
+      - .env  # <-- Add this line
     networks:
       - app-network
 
