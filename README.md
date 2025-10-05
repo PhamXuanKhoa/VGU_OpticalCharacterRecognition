@@ -58,10 +58,10 @@ Before you begin, you will need to have two programs installed:
     git clone https://github.com/minhle-120/VGU_OCR.git
     ```
 
-3.  This will create a new folder named `VGU_OCR`. Navigate into this folder with the command:
+3.  This will create a new folder named `VGU_OpticalCharacterRecognition`. Navigate into this folder with the command:
 
     ```bash
-    cd VGU_OCR
+    cd VGU_OpticalCharacterRecognition
     ```
 
 ### **Step 2: Add Your Gemini API Key**
