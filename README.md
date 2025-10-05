@@ -44,7 +44,7 @@ Follow these steps to get the project running on your computer.
 
 Before you begin, you will need to have two programs installed:
 
-1.  **Git:** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
+1.  **Git(optional):** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
 2.  **Docker Desktop:** This program runs the application in a self-contained environment. You can download it from the [Docker website](https://www.docker.com/products/docker-desktop).
 
 ### **Step 1: Copy the Project to Your Computer**
@@ -55,8 +55,9 @@ Before you begin, you will need to have two programs installed:
 2.  Run the following command to copy the project files:
 
     ```bash
-    git clone https://github.com/minhle-120/VGU_OCR.git
+    git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition.git
     ```
+    Alternatively, if you do not have Git, you can download the source code from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of this repository.
 
 3.  This will create a new folder named `VGU_OpticalCharacterRecognition`. Navigate into this folder with the command:
 
@@ -87,6 +88,8 @@ Now you are ready to start the application.
     ```bash
     docker-compose up --build
     ```
+
+    **Note**: The first time you run this command, it might take a while and require a fast internet connection to download all necessary libraries and dependencies.
 
     This command will build the application and start it. This might take a few minutes the first time you run it.
 
