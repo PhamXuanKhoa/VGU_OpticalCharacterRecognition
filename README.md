@@ -36,61 +36,74 @@ Got an image with text? Upload it! 🖼️ Want to extract text, pinpoint keywor
 *   **Docker:** 📦 Containerization for consistency and ease.
 *   **Docker Compose:** 🎼 Orchestrating our multi-container Docker applications.
 
-## 🚀 Setup and Local Development
+## 🚀 Getting Started: A Simple Guide
 
-Ready to get this project running on your local machine? Let's do it!
+Follow these steps to get the project running on your computer.
 
 ### **Prerequisites**
 
-*   [Docker Desktop](https://www.docker.com/products/docker-desktop) (Docker Engine and Docker Compose included) up and running.
-*   Git installed and ready to go.
+Before you begin, you will need to have two programs installed:
 
-### **1. Clone the Repository**
+1.  **Git:** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
+2.  **Docker Desktop:** This program runs the application in a self-contained environment. You can download it from the [Docker website](https://www.docker.com/products/docker-desktop).
 
-```bash
-git clone https://github.com/minhle-120/VGU_OCR.git
-cd VGU_OCR
-```
+### **Step 1: Copy the Project to Your Computer**
 
-### **2. Configure Environment Variables**
+1.  Open a terminal or command prompt.
+    *   On Windows, you can search for "Command Prompt" or "PowerShell".
+    *   On macOS, you can search for "Terminal".
+2.  Run the following command to copy the project files:
 
-*   **For the Backend (`.env` in the project root):**
-    This file is for your secret API keys. 🤫
-    Create a new file named `.env` in the root directory of the project (`VGU_OCR/`).
-
+    ```bash
+    git clone https://github.com/minhle-120/VGU_OCR.git
     ```
-    GEMINI_API_KEY=your_gemini_api_key_here
-    GOOGLE_API_KEY=key
-    GOOGLE_CSE_ID=key
+
+3.  This will create a new folder named `VGU_OCR`. Navigate into this folder with the command:
+
+    ```bash
+    cd VGU_OCR
     ```
-    **Note:** Don't forget to replace `your_gemini_api_key_here` and the other keys with your actual credentials. This file is listed in `.gitignore`, so it won't be committed.
 
-### **3. Build and Run with Docker Compose**
+### **Step 2: Add Your Gemini API Key**
 
-Head to the root of your project (`VGU_OCR/`) in your terminal and fire away:
+To use some of the advanced features, you'll need a Gemini API key.
 
-```bash
-docker-compose up --build
-```
+1.  Open the `docker-compose.yml` file in a text editor.
+2.  Find the following lines in the file:
 
-*   `--build`: This will build the Docker images for both the backend and frontend. You'll only need to do this the first time or when you change the Dockerfiles or dependencies.
-*   `-d`: This runs the services in detached mode, so they'll hum along in the background.
+    ```yaml
+          - GEMINI_API_KEY=your_gemini_api_key_here
+    ```
 
-### **4. Access the Application**
+3.  Replace `your_gemini_api_key_here` with your actual Gemini API key.
 
-Once everything is up and running:
+### **Step 3: Run the Application**
 
-*   **Frontend:** 🖥️ Open your browser and navigate to `http://localhost:5173`.
-*   **Backend API (FastAPI Docs):** 📄 Check out the backend's Swagger UI at `http://localhost:8000/docs`.
+Now you are ready to start the application.
 
-### **5. Stop the Application**
+1.  Make sure you are in the `VGU_OpticalCharacterRecognition` folder in your terminal.
+2.  Run the following command (make sure you have docker running first):
 
-When you're ready to shut things down, run:
+    ```bash
+    docker-compose up --build
+    ```
+
+    This command will build the application and start it. This might take a few minutes the first time you run it.
+
+### **Step 4: Access the Application**
+
+Once the command in the previous step has finished, the application is running!
+
+*   **See the App:** Open your web browser and go to `http://localhost:5173`.
+*   **Backend API (for developers):** You can see the backend documentation at `http://localhost:8000/docs`.
+
+### **How to Stop the Application**
+
+When you are finished, you can stop the application by going back to your terminal and pressing `Ctrl + C`. Then, run the following command to clean up:
 
 ```bash
 docker-compose down
 ```
-This will stop and remove the containers, networks, and volumes.
 
 ## 🙏 Credits
 
