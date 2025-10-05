@@ -59,12 +59,6 @@ Before you begin, you will need to have two programs installed:
     ```
     Alternatively, if you do not have Git, you can download the source code from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of this repository.
 
-3.  This will create a new folder named `VGU_OpticalCharacterRecognition`. Navigate into this folder with the command:
-
-    ```bash
-    cd VGU_OpticalCharacterRecognition
-    ```
-
 ### **Step 2: Add Your Gemini API Key**
 
 To use some of the advanced features, you'll need a Gemini API key.
