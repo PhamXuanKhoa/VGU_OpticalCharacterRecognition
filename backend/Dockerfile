@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt --extra-index-url https://dow
 # Copy the rest of the application's code
 COPY . .
 
-# Download VietOCR model during build
-RUN --mount=type=cache,target=/root/.cache python /app/backend/download_vietocr_model.py && rm /app/backend/download_vietocr_model.py
+# Download models during build
+RUN --mount=type=cache,target=/root/.cache python /app/backend/download_models.py && rm /app/backend/download_models.py
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
