@@ -67,7 +67,7 @@ To use some of the advanced features, you'll need a Gemini API key.
 2.  Find the following lines in the file:
 
     ```yaml
-          - GEMINI_API_KEY=your_gemini_api_key_here
+      GEMINI_API_KEY=your_gemini_api_key_here
     ```
 
 3.  Replace `your_gemini_api_key_here` with your actual Gemini API key.
