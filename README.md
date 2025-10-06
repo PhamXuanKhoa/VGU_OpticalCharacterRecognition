@@ -44,18 +44,18 @@ Follow these steps to get the project running on your computer.
 
 Before you begin, you will need to have two programs installed:
 
-1.  **Git(optional):** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
+1.  **Git (optional):** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
 2.  **Docker Desktop:** This program runs the application in a self-contained environment. You can download it from the [Docker website](https://www.docker.com/products/docker-desktop).
 
-### **Step 1: Copy the Project to Your Computer**
+### **Step 1: Clone the Project to Your Computer**
 
 1.  Open a terminal or command prompt.
-    *   On Windows, you can search for "Command Prompt" or "PowerShell".
+    *   On Windows, you can search for "Command Prompt" or "Windows PowerShell".
     *   On macOS, you can search for "Terminal".
 2.  Run the following command to copy the project files:
 
     ```bash
-    git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition.git
+    git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition
     ```
     Alternatively, if you do not have Git, you can download the source code from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of this repository.
 
