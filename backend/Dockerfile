@@ -17,10 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt --extra-index-url https://dow
 COPY . .
 
 # Download models during build
-RUN --mount=type=cache,target=/root/.cache python /app/backend/download_models.py && rm /app/backend/download_models.py
+RUN python /app/backend/download_models.py && rm /app/backend/download_models.py
 
 # Make port 8000 available to the world outside this container
 EXPOSE 8000
 
 # Run the app when the container launches with hot-reloading
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
