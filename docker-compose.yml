@@ -1,33 +1,18 @@
 
 services:
-  backend:
+  merged-app:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: fastapi_backend_dev
+      context: .
+      dockerfile: Dockerfile.merged
+    container_name: merged_app_dev
     ports:
+      - "80:80"
       - "8000:8000"
     environment:
       - GEMINI_API_KEY=your_gemini_api_key_here # Replace with your actual Gemini API key (no need for " ")
-    volumes:
-      - ./backend/app:/app/app
-      - backend_cache:/root/.cache
-    networks:
-      - app-network
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: react_frontend_dev
-    ports:
-      - "5173:3000"
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  backend_cache:

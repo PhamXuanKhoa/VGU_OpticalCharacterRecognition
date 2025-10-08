@@ -1,0 +1,46 @@
+# Stage 1: Build the frontend
+FROM node:20-alpine as frontend-builder
+
+WORKDIR /app/frontend
+
+COPY frontend/package*.json ./
+RUN npm install
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: Build the backend and serve both
+FROM python:3.10-slim-bullseye
+
+WORKDIR /app
+
+# Install Tesseract OCR engine and Vietnamese language pack
+RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-vie && rm -rf /var/lib/apt/lists/*
+
+# Copy backend requirements and install
+COPY backend/requirements.txt ./backend/
+RUN pip install --no-cache-dir -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+# Copy backend code
+COPY backend/ ./
+
+# Download models during build
+RUN python ./download_models.py && rm ./download_models.py
+
+# Copy frontend build artifacts
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+
+# Install Nginx to serve the frontend static files
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
+
+# Remove default Nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose ports
+EXPOSE 80
+EXPOSE 8000
+
+# Create a start script
+COPY start.sh ./
+RUN chmod +x start.sh
+
+CMD ["./start.sh"]
