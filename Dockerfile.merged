@@ -30,7 +30,7 @@ RUN python ./download_models.py && rm ./download_models.py
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 # Install Nginx to serve the frontend static files
-RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y nginx dos2unix && rm -rf /var/lib/apt/lists/*
 
 # Remove default Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
@@ -41,6 +41,7 @@ EXPOSE 8000
 
 # Create a start script
 COPY start.sh ./
+RUN dos2unix start.sh
 RUN chmod +x start.sh
 
 CMD ["./start.sh"]
