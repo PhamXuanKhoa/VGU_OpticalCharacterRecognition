@@ -29,7 +29,7 @@ jobs:
 
       - name: Set lowercase repository name
         id: repo_name_lower
-        run: echo "REPO_NAME_LOWER=${{ github.repository }}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+        run: echo "repo_name_lower=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -37,6 +37,6 @@ jobs:
           context: .
           file: ./Dockerfile.merged
           push: true
-          tags: ghcr.io/${{ env.REPO_NAME_LOWER }}:latest
+          tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
