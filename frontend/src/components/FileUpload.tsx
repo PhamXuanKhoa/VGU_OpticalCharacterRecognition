@@ -21,7 +21,8 @@ import { cn } from "@/lib/utils";
 import { HelpCircle, Upload, Loader2 } from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
 
-export default function FileUpload01(): Element {
+export default function FileUpload(): JSX.Element {
+    const API_URL = "http://localhost:8000/";
     const [selectedOCREngine, setSelectedOCREngine] = useState<string | null>(null);
     const [selectedNlpEngine, setSelectedNlpEngine] = useState<string | null>(null);
     const [selectedSearchEngine, setSelectedSearchEngine] = useState<string | null>(null);
@@ -37,11 +38,11 @@ export default function FileUpload01(): Element {
     };
 
     const [isPageLoading, setIsPageLoading] = useState(true);
-    const [availableEngines, setAvailableEngines] = useState<string | null>(null);
+    const [availableEngines, setAvailableEngines] = useState<any>(null);
 
     useEffect(() => {
         const xhr = new XMLHttpRequest();
-        const url = import.meta.env.VITE_API_URL + "available-engines";
+        const url = API_URL + "available-engines";
 
         xhr.open("GET", url, true);
 
@@ -75,7 +76,7 @@ export default function FileUpload01(): Element {
 
             const firstResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", `${import.meta.env.VITE_API_URL}select-engines/${taskId}`, true);
+                xhr.open("POST", `${API_URL}select-engines/${taskId}`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -99,7 +100,7 @@ export default function FileUpload01(): Element {
 
             const secondResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", `${import.meta.env.VITE_API_URL}process-task/${taskId}`, true);
+                xhr.open("POST", `${API_URL}process-task/${taskId}`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -121,7 +122,7 @@ export default function FileUpload01(): Element {
         } finally {
             const ocrResultResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${import.meta.env.VITE_API_URL}results/${taskId}/extracted-text`, true);
+                xhr.open("GET", `${API_URL}results/${taskId}/extracted-text`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -143,7 +144,7 @@ export default function FileUpload01(): Element {
 
             const nlpResultResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${import.meta.env.VITE_API_URL}results/${taskId}/keywords`, true);
+                xhr.open("GET", `${API_URL}results/${taskId}/keywords`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -165,7 +166,7 @@ export default function FileUpload01(): Element {
 
             const documentLinksResultResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${import.meta.env.VITE_API_URL}results/${taskId}/document-links`, true);
+                xhr.open("GET", `${API_URL}results/${taskId}/document-links`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -187,7 +188,7 @@ export default function FileUpload01(): Element {
 
             const summaryResultResponse = await new Promise<any>((resolve, reject) => {
                 const xhr = new XMLHttpRequest();
-                xhr.open("GET", `${import.meta.env.VITE_API_URL}results/${taskId}/summary`, true);
+                xhr.open("GET", `${API_URL}results/${taskId}/summary`, true);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.onreadystatechange = () => {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -212,7 +213,7 @@ export default function FileUpload01(): Element {
         }
     };
 
-    const handleCopyOcr: () => Promise<void> = async (): Promise<void> => {
+    const handleCopyOcr = async (): Promise<void> => {
         const textElement= document.querySelector("#ocr-result-text");
 
         if (!textElement) {
@@ -263,7 +264,7 @@ export default function FileUpload01(): Element {
             setIsDisaled(true);
 
             let progress: number = 0;
-            const interval: number = setInterval((): void => {
+            const interval: any = setInterval((): void => {
                 progress = progress + Math.random() * 10;
                 if (progress >= 100) {
                     progress = 100;
@@ -283,7 +284,7 @@ export default function FileUpload01(): Element {
 
             const xhr = new XMLHttpRequest();
 
-            const url = import.meta.env.VITE_API_URL + "upload-image";
+            const url = API_URL + "upload-image";
             xhr.open("POST", url, true);
 
             xhr.onload = function () {
@@ -370,7 +371,7 @@ export default function FileUpload01(): Element {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {availableEngines?.ocr_engines?.map((engine) => (
+                                                {availableEngines?.ocr_engines?.map((engine: string) => (
                                                     <SelectItem key={engine} value={engine}>
                                                         <div className="flex items-center gap-2">
                                                             <img
@@ -404,7 +405,7 @@ export default function FileUpload01(): Element {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {availableEngines?.nlp_engines?.map((engine) => (
+                                                {availableEngines?.nlp_engines?.map((engine: string) => (
                                                     <SelectItem key={engine} value={engine}>
                                                         <div className="flex items-center gap-2">
                                                             <img
@@ -440,7 +441,7 @@ export default function FileUpload01(): Element {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {availableEngines?.search_engines?.map((engine) => (
+                                                {availableEngines?.search_engines?.map((engine: string) => (
                                                     <SelectItem key={engine} value={engine}>
                                                         <div className="flex items-center gap-2">
                                                             <img
@@ -474,7 +475,7 @@ export default function FileUpload01(): Element {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                {availableEngines?.summarizer_engines?.map((engine) => (
+                                                {availableEngines?.summarizer_engines?.map((engine: string) => (
                                                     <SelectItem key={engine} value={engine}>
                                                         <div className="flex items-center gap-2">
                                                             <img
@@ -551,9 +552,6 @@ export default function FileUpload01(): Element {
                                     <div
                                         className="border border-border rounded-lg p-2 flex flex-col"
                                         key={file.name + index}
-                                        onLoad={(): () => void => {
-                                            return (): void => {};
-                                        }}
                                     >
                                         <div className="flex items-center gap-2">
                                             <div className="w-18 h-14 rounded-sm flex items-center justify-center self-start row-span-2 overflow-hidden">
@@ -692,13 +690,13 @@ export default function FileUpload01(): Element {
                                                 Above is the recognized text from your document. You can now select and copy it.
                                             </p>
                                         </div>
-                                        onClick={handleCopyOcr}
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
 
                             <div className="flex gap-2">
                                 <Button
+                                    onClick={handleCopyOcr}
                                     style={{cursor: "pointer"}}
                                     className="h-9 px-4 text-sm font-medium">
                                     Copy text

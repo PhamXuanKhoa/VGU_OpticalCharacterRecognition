@@ -1,5 +1,4 @@
 
-
 services:
   backend:
     build:
@@ -12,7 +11,6 @@ services:
       - GEMINI_API_KEY=your_gemini_api_key_here # Replace with your actual Gemini API key (no need for " ")
     volumes:
       - ./backend/app:/app/app
-      - backend_cache:/root/.cache
     networks:
       - app-network
 
@@ -22,18 +20,10 @@ services:
       dockerfile: Dockerfile
     container_name: react_frontend_dev
     ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - VITE_API_URL=http://localhost:8000/
+      - "5173:3000"
     networks:
       - app-network
 
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  backend_cache:

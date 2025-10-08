@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import FileUpload from "@/components/FileUpload.tsx"
 
 function App() {

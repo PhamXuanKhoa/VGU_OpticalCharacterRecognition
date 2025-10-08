@@ -15,10 +15,14 @@ RUN npm install
 # Copy the rest of the application's code
 COPY . .
 
+# Build the project
+RUN npm run build
 
+# Install a simple server to serve the static files
+RUN npm install -g serve
 
-# Make port 5173 available to the world outside this container
-EXPOSE 5173
+# Make port 3000 available to the world outside this container
+EXPOSE 3000
 
 # Run the app when the container launches
-CMD ["npm", "run", "dev", "--host"]
+CMD ["serve", "-s", "dist"]
