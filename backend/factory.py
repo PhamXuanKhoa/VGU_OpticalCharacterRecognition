@@ -36,7 +36,6 @@ NLP_ENGINES = {
 
 SEARCH_ENGINES = {
     "dummy": DummySearchEngine,
-    "google": GoogleSearchEngine,
     "duckduckgo": DuckDuckGoScrapeEngine,
 }
 
