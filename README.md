@@ -66,9 +66,9 @@ A Gemini API key is required for the application's advanced features.
 
 1.  Navigate to the root of the project directory and open the `docker-compose.yml` file in a text editor.
 2.  Locate the following environment variable:
-    ```yaml
-    GEMINI_API_KEY=your_gemini_api_key_here
-    ```
+```yaml
+ GEMINI_API_KEY=your_gemini_api_key_here
+ ```
 3.  Replace `your_gemini_api_key_here` with your valid Gemini API key.
 
 ### **Step 3: Launch the Application**
@@ -77,10 +77,10 @@ With Docker running, you can now build and start the application.
 
 1.  Ensure your terminal's current directory is the project's root folder (`VGU_OpticalCharacterRecognition`).
 2.  Execute the following command:
-    ```bash
-    docker-compose up --build
-    ```
-    **Note**: The initial build process may take some time as it needs to download all the necessary dependencies and libraries. A stable internet connection is recommended.
+```bash
+docker-compose up --build
+```
+**Note**: The initial build process may take some time as it needs to download all the necessary dependencies and libraries. A stable internet connection is recommended.
 
 ### **Step 4: Access the Application**
 
