@@ -45,56 +45,43 @@ To get the project up and running on your local machine, please follow the steps
 
 ### **Prerequisites**
 
-Ensure you have the following software installed on your system:
+Ensure you have Docker Desktop installed on your system. It can be downloaded from the [Docker website](https://www.docker.com/products/docker-desktop).
 
-1.  **Git**: For cloning the project repository. It can be downloaded from [git-scm.com](https://git-scm.com/downloads). (Optional)
-2.  **Docker Desktop**: For running the application in a containerized environment. It can be downloaded from the [Docker website](https://www.docker.com/products/docker-desktop).
+### **Step 1: Pull the Docker Image**
 
-### **Step 1: Clone the Repository**
-
-Open your terminal or command prompt and execute the following command to clone the project repository:
+Open your terminal or command prompt and execute the following command to pull the latest Docker image:
 
 ```bash
-git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition
+docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
 ```
 
-Alternatively, you can download the source code directly from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of the repository.
+### **Step 2: Run the Docker Container**
 
-### **Step 2: Configure Gemini API Key**
+Run the application using the following command, replacing `"your_gemini_api_key_here"` with your actual Gemini API key:
 
-A Gemini API key is required for the application's advanced features.
-
-1.  Navigate to the root of the project directory and open the `docker-compose.yml` file in a text editor.
-2.  Locate the following environment variable:
-```yaml
- GEMINI_API_KEY=your_gemini_api_key_here
- ```
-3.  Replace `your_gemini_api_key_here` with your valid Gemini API key.
-
-### **Step 3: Launch the Application**
-
-With Docker running, you can now build and start the application.
-
-1.  Ensure your terminal's current directory is the project's root folder (`VGU_OpticalCharacterRecognition`).
-2.  Execute the following command:
 ```bash
-docker-compose up --build
+docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
 ```
-**Note**: The initial build process may take some time as it needs to download all the necessary dependencies and libraries. A stable internet connection is recommended.
 
-### **Step 4: Access the Application**
+### **Step 3: Access the Application**
 
-Once the build and startup process is complete, the application will be accessible.
+Once the container is running, the application will be accessible.
 
 *   **Frontend Application**: Open your web browser and navigate to `http://localhost:5173`.
 *   **Backend API Documentation**: The backend API documentation is available at `http://localhost:8000/docs`.
 
 ### **Stopping the Application**
 
-To stop the application, return to the terminal where the application is running and press `Ctrl + C`. To remove the containers and associated networks, run:
+To stop the application, run:
 
 ```bash
-docker-compose down
+docker stop vgu_ocr_app
+```
+
+To remove the container, run:
+
+```bash
+docker rm vgu_ocr_app
 ```
 
 ## Credits
