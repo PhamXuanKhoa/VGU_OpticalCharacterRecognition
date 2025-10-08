@@ -1,7 +1,5 @@
 # VGU_OpticalCharacterRecognition
 
-## Overview
-
 VGU_OpticalCharacterRecognition is a comprehensive, full-stack application designed for advanced Optical Character Recognition (OCR) and document processing. It integrates a Python FastAPI backend with a React/Vite frontend to provide a robust platform for text extraction, analysis, and document management.
 
 The application allows users to upload images, extract text using various OCR engines, identify key terms with Natural Language Processing (NLP), discover related articles through integrated search functionalities, and generate concise summaries of the content.
