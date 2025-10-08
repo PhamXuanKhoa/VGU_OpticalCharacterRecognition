@@ -33,6 +33,6 @@ jobs:
           context: .
           file: ./Dockerfile.merged
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository | lower }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
