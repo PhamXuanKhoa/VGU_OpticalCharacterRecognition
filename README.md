@@ -1,110 +1,107 @@
-# 📝 VGU_OpticalCharacterRecognition
+# VGU_OpticalCharacterRecognition
 
-Welcome to VGU_OpticalCharacterRecognition! This is a full-stack powerhouse for Optical Character Recognition (OCR) and document processing. 🧠✨ We've combined a slick Python FastAPI backend with a stunning React/Vite frontend to bring you a seamless experience.
+## Overview
 
-Got an image with text? Upload it! 🖼️ Want to extract text, pinpoint keywords, find related articles, and get a neat summary? You're in the right place. ✅
+VGU_OpticalCharacterRecognition is a comprehensive, full-stack application designed for advanced Optical Character Recognition (OCR) and document processing. It integrates a Python FastAPI backend with a React/Vite frontend to provide a robust platform for text extraction, analysis, and document management.
 
-## ✨ Features
+The application allows users to upload images, extract text using various OCR engines, identify key terms with Natural Language Processing (NLP), discover related articles through integrated search functionalities, and generate concise summaries of the content.
 
-*   **Image Upload:** 📤 Pop your images in for some OCR magic.
-*   **Dynamic Engine Selection:** ⚙️ Your choice of OCR, NLP, search, and summarization engines. We've got dummy engines for testing, and heavy-hitters like Gemini, Google Search, DuckDuckGo, and VietOCR.
-*   **Text Extraction:** ✍️ Pull text from your images with ease.
-*   **Keyword Identification:** 🔑 Use NLP engines to find the key terms and phrases that matter.
-*   **Document Linking:** 🔗 Discover related documents and articles based on extracted keywords.
-*   **Content Summarization:** 📚 Get the gist of your content with automatically generated summaries.
-*   **Dockerized Deployment:** 🐳 Easy-peasy setup and deployment with Docker and Docker Compose.
+## Features
 
-## 🛠️ Technologies Used
+*   **Image Upload and Processing**: Interface for uploading images for OCR processing.
+*   **Dynamic Engine Selection**: Flexibility to choose from multiple engines for OCR, NLP, search, and summarization, including options like Gemini, Google Search, DuckDuckGo, and VietOCR.
+*   **Text Extraction**: High-accuracy text extraction from image-based documents.
+*   **Keyword Identification**: Automated identification of key terms and phrases using NLP.
+*   **Document Linking**: Retrieval of relevant documents and articles based on extracted keywords.
+*   **Content Summarization**: Generation of automated summaries for extracted text.
+*   **Containerized Deployment**: Simplified setup and deployment using Docker and Docker Compose for a consistent environment.
 
-### **Backend:**
-*   **Python 3.10:** 🐍 The brains of the operation.
-*   **FastAPI:** ⚡ A lightning-fast web framework for building APIs.
-*   **Uvicorn:** 🦄 An ASGI server to keep FastAPI running smoothly.
-*   **Google Generative AI (Gemini API):** 🤖 For next-level NLP, OCR, and summarization.
-*   **VietOCR:** 🇻🇳 Specialized for Vietnamese OCR.
-*   **Requests, BeautifulSoup4:** 🕸️ Our tools for web scraping and searching.
-*   **Pillow:** 🖼️ For all your image processing needs.
+## Technology Stack
 
-### **Frontend:**
-*   **React:** ⚛️ Building beautiful and responsive user interfaces.
-*   **Vite:** 🚀 A frontend build tool that's fast.
-*   **TypeScript:** ⌨️ Because we like our JavaScript with types.
-*   **Tailwind CSS / Shadcn UI:** 🎨 For styling and UI components that pop.
-*   **XMLHttpRequest:** 📞 Making those all-important API calls.
+### **Backend**
 
-### **Deployment:**
-*   **Docker:** 📦 Containerization for consistency and ease.
-*   **Docker Compose:** 🎼 Orchestrating our multi-container Docker applications.
+*   **Python 3.10**: Core language for backend development.
+*   **FastAPI**: High-performance web framework for building APIs.
+*   **Uvicorn**: ASGI server for running FastAPI applications.
+*   **Google Generative AI (Gemini API)**: Utilized for advanced OCR, NLP, and summarization capabilities.
+*   **VietOCR**: Specialized OCR engine for Vietnamese language text.
+*   **Requests & BeautifulSoup4**: Libraries for web scraping and search functionalities.
+*   **Pillow**: Image processing library for handling image manipulations.
 
-## 🚀 Getting Started: A Simple Guide
+### **Frontend**
 
-Follow these steps to get the project running on your computer.
+*   **React**: JavaScript library for building user interfaces.
+*   **Vite**: Modern frontend build tool for faster development.
+*   **TypeScript**: Typed superset of JavaScript for enhanced code quality.
+*   **Tailwind CSS / Shadcn UI**: Frameworks for designing and building the user interface and components.
+*   **XMLHttpRequest**: Standard API for making requests to the backend.
+
+### **Deployment**
+
+*   **Docker**: Platform for developing, shipping, and running applications in containers.
+*   **Docker Compose**: Tool for defining and running multi-container Docker applications.
+
+## Getting Started
+
+To get the project up and running on your local machine, please follow the steps below.
 
 ### **Prerequisites**
 
-Before you begin, you will need to have two programs installed:
+Ensure you have the following software installed on your system:
 
-1.  **Git (optional):** This is a tool that helps you copy the project files to your computer. If you don't have it, you can download it from [git-scm.com](https://git-scm.com/downloads).
-2.  **Docker Desktop:** This program runs the application in a self-contained environment. You can download it from the [Docker website](https://www.docker.com/products/docker-desktop).
+1.  **Git**: For cloning the project repository. It can be downloaded from [git-scm.com](https://git-scm.com/downloads). (Optional)
+2.  **Docker Desktop**: For running the application in a containerized environment. It can be downloaded from the [Docker website](https://www.docker.com/products/docker-desktop).
 
-### **Step 1: Clone the Project to Your Computer**
+### **Step 1: Clone the Repository**
 
-1.  Open a terminal or command prompt.
-    *   On Windows, you can search for "Command Prompt" or "Windows PowerShell".
-    *   On macOS, you can search for "Terminal".
-2.  Run the following command to copy the project files:
+Open your terminal or command prompt and execute the following command to clone the project repository:
 
-    ```bash
-    git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition
-    ```
-    Alternatively, if you do not have Git, you can download the source code from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of this repository.
+```bash
+git clone https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition
+```
 
-### **Step 2: Add Your Gemini API Key**
+Alternatively, you can download the source code directly from the [releases tab](https://github.com/PhamXuanKhoa/VGU_OpticalCharacterRecognition/releases) of the repository.
 
-To use some of the advanced features, you'll need a Gemini API key.
+### **Step 2: Configure Gemini API Key**
 
-1.  Open the `docker-compose.yml` file in a text editor.
-2.  Find the following lines in the file:
+A Gemini API key is required for the application's advanced features.
 
+1.  Navigate to the root of the project directory and open the `docker-compose.yml` file in a text editor.
+2.  Locate the following environment variable:
     ```yaml
     GEMINI_API_KEY=your_gemini_api_key_here
     ```
+3.  Replace `your_gemini_api_key_here` with your valid Gemini API key.
 
-3.  Replace `your_gemini_api_key_here` with your actual Gemini API key.
+### **Step 3: Launch the Application**
 
-### **Step 3: Run the Application**
+With Docker running, you can now build and start the application.
 
-Now you are ready to start the application.
-
-1.  Make sure you are in the `VGU_OpticalCharacterRecognition` folder in your terminal.
-2.  Run the following command (make sure you have docker running first):
-
+1.  Ensure your terminal's current directory is the project's root folder (`VGU_OpticalCharacterRecognition`).
+2.  Execute the following command:
     ```bash
     docker-compose up --build
     ```
-
-    **Note**: The first time you run this command, it might take a while and require a fast internet connection to download all necessary libraries and dependencies.
-
-    This command will build the application and start it. This might take a few minutes the first time you run it.
+    **Note**: The initial build process may take some time as it needs to download all the necessary dependencies and libraries. A stable internet connection is recommended.
 
 ### **Step 4: Access the Application**
 
-Once the command in the previous step has finished, the application is running!
+Once the build and startup process is complete, the application will be accessible.
 
-*   **See the App:** Open your web browser and go to `http://localhost:5173`.
-*   **Backend API (for developers):** You can see the backend documentation at `http://localhost:8000/docs`.
+*   **Frontend Application**: Open your web browser and navigate to `http://localhost:5173`.
+*   **Backend API Documentation**: The backend API documentation is available at `http://localhost:8000/docs`.
 
-### **How to Stop the Application**
+### **Stopping the Application**
 
-When you are finished, you can stop the application by going back to your terminal and pressing `Ctrl + C`. Then, run the following command to clean up:
+To stop the application, return to the terminal where the application is running and press `Ctrl + C`. To remove the containers and associated networks, run:
 
 ```bash
 docker-compose down
 ```
 
-## 🙏 Credits
+## Credits
 
-This project is brought to you by the combined efforts of these awesome people:
+This project was developed through the collaborative efforts of:
 
--   **[@minhle-120] (https://github.com/minhle-120):** The mastermind behind the FastAPI backend and OCR engines. 🧑‍💻
--   **[@PhamXuanKhoa] (https://www.github.com/PhamXuanKhoa):** The creative genius who designed the entire UI/UX and built the React components. 🎨
+*   **[@minhle-120] (https://github.com/minhle-120):** Backend development, including the FastAPI implementation and integration of OCR engines.
+*   **[@PhamXuanKhoa] (https://www.github.com/PhamXuanKhoa):** Frontend development, including UI/UX design and the creation of React components.
