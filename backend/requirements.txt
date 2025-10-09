@@ -13,3 +13,4 @@ torch
 torchvision
 pytesseract
 stanza
+spacy

@@ -8,6 +8,7 @@ from engines.ocr.pytesseract_ocr import PytesseractOCREngine
 
 from engines.nlp.dummy_nlp import DummyNLPEngine
 from engines.nlp.gemini_nlp import GeminiNLPEngine
+from engines.nlp.spacy_nlp import SpacyNLPEngine
 from engines.nlp.stanford_nlp import StanfordNLPEngine
 
 
@@ -31,6 +32,7 @@ OCR_ENGINES = {
 NLP_ENGINES = {
     "dummy": DummyNLPEngine,
     "gemini": GeminiNLPEngine,
+    "spacy": SpacyNLPEngine,
     "stanford_viet": StanfordNLPEngine
 }
 

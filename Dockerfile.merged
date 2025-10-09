@@ -20,6 +20,9 @@ RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-vie && rm -
 COPY backend/requirements.txt ./backend/
 RUN pip install --no-cache-dir -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
+# Download spaCy model
+RUN python -m spacy download en_core_web_sm
+
 # Copy backend code
 COPY backend/ ./
 
