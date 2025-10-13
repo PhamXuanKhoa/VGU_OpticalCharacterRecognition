@@ -17,6 +17,17 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { cn } from "@/lib/utils";
 import { HelpCircle, Upload, Loader2 } from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
@@ -28,13 +39,20 @@ export default function FileUpload(): JSX.Element {
     const [selectedSearchEngine, setSelectedSearchEngine] = useState<string | null>(null);
     const [selectedSummarizerEngine, setSelectedSummarizerEngine] = useState<string | null>(null);
 
+    const [isSuccessfullyDialogOpen, setIsSuccessfullyDialogOpen] = useState(false);
+
     const [isDoneProcessing, setIsDoneProcessing] = useState(false);
 
     const engineLogos: Record<string, string> = {
         dummy: "/logos/Dummy.png",
         gemini: "/logos/Gemini.png",
         google: "/logos/Google.svg",
-        duckduckgo: "/logos/DuckDuckGo.svg"
+        duckduckgo: "/logos/DuckDuckGo.svg",
+        stanford_viet: "/logos/Vietnam.jpg",
+        spacy: "/logos/Spacy.svg",
+        vietocr: "/logos/Vietnam.jpg",
+        vietocr_raw: "/logos/Vietnam.jpg",
+        tesseract_viet: "/logos/Google.svg",
     };
 
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -117,6 +135,8 @@ export default function FileUpload(): JSX.Element {
 
             console.log("First response:", firstResponse);
             console.log("Second response:", secondResponse);
+
+            setIsSuccessfullyDialogOpen(true);
         } catch (err) {
             console.error(err);
         } finally {
@@ -782,7 +802,7 @@ export default function FileUpload(): JSX.Element {
 
                         <div className="px-6">
                             <div className="border-2 border-dashed border-border rounded-md p-3 flex flex-col">
-                                <p id="document-links-result-text"></p>
+                                <p id="document-links-result-text" style={{wordWrap: "break-word"}}></p>
                             </div>
                         </div>
 
@@ -879,6 +899,23 @@ export default function FileUpload(): JSX.Element {
                     </CardContent>
                 </Card>
             </div>
+
+            <AlertDialog open={isSuccessfullyDialogOpen} onOpenChange={setIsSuccessfullyDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Done processing</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Your file has been processed. Please check the results below.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        {/* The action button simply closes the dialog in this case */}
+                        <AlertDialogAction onClick={() => setIsSuccessfullyDialogOpen(false)}>
+                            OK
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     );
 }
