@@ -5,6 +5,7 @@ from engines.ocr.gemini_ocr import GeminiOCREngine
 from engines.ocr.vietocr import VietOCRCroppingEngine
 from engines.ocr.vietocr_raw_engine import VietOCRRawEngine
 from engines.ocr.pytesseract_ocr import PytesseractOCREngine
+from engines.ocr.easyocr_ocr import EasyOCREngine
 
 from engines.nlp.dummy_nlp import DummyNLPEngine
 from engines.nlp.gemini_nlp import GeminiNLPEngine
@@ -27,7 +28,8 @@ OCR_ENGINES = {
     "gemini": GeminiOCREngine,
     "vietocr": VietOCRCroppingEngine,
     "vietocr_raw": VietOCRRawEngine,
-    "tesseract_viet": PytesseractOCREngine
+    "tesseract_viet": PytesseractOCREngine,
+    "easyocr": EasyOCREngine
 }
 
 NLP_ENGINES = {
