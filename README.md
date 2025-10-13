@@ -49,7 +49,7 @@ Ensure you have Docker Desktop installed on your system. It can be downloaded fr
 
 ### **Step 1: Pull the Docker Image**
 
-Open your terminal or command prompt and execute the following command to pull the latest Docker image:
+Open your terminal or command prompt and execute the following command to pull the latest Docker image (make sure you have Docker running in the background):
 
 ```bash
 docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
@@ -57,7 +57,7 @@ docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
 
 ### **Step 2: Run the Docker Container**
 
-Run the application using the following command, replacing `"your_gemini_api_key_here"` with your actual Gemini API key:
+Run the application using the following command, replacing `your_gemini_api_key_here` with your actual Gemini API key:
 
 ```bash
 docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
