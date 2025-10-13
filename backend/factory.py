@@ -10,6 +10,7 @@ from engines.nlp.dummy_nlp import DummyNLPEngine
 from engines.nlp.gemini_nlp import GeminiNLPEngine
 from engines.nlp.spacy_nlp import SpacyNLPEngine
 from engines.nlp.stanford_nlp import StanfordNLPEngine
+from engines.nlp.underthesea_nlp import UndertheseaNLP
 
 
 from engines.search.dummy_search import DummySearchEngine
@@ -33,7 +34,8 @@ NLP_ENGINES = {
     "dummy": DummyNLPEngine,
     "gemini": GeminiNLPEngine,
     "spacy": SpacyNLPEngine,
-    "stanford_viet": StanfordNLPEngine
+    "stanford_viet": StanfordNLPEngine,
+    "underthesea": UndertheseaNLP
 }
 
 SEARCH_ENGINES = {
