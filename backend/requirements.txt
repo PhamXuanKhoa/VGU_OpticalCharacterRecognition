@@ -18,3 +18,4 @@ underthesea
 easyocr
 arxiv
 ddgs
+pyvi
