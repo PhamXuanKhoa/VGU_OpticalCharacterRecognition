@@ -34,33 +34,37 @@ class GeminiSummarizerEngine(SummarizerEngine):
     def summarize(self, document_urls: List[str]) -> str:
         print(f"--- [ENGINE: Google Gemini Summarizer] Summarizing content from {len(document_urls)} URLs in a single API call ---")
 
-        content_parts = []
-        for url in document_urls:
+        documents = []
+        for i, url in enumerate(document_urls):
             print(f"  - Fetching content from: {url}")
             content = self._fetch_and_clean_content(url)
             if content:
-                content_parts.append(f"URL: {url}\nCONTENT:\n{content}")
+                documents.append({"url": url, "content": content, "id": i + 1})
 
-        if not content_parts:
+        if not documents:
             return "Could not retrieve any content to summarize."
 
-        full_text_block = "\n\n---\n\n".join(content_parts)
+        document_block = ""
+        for doc in documents:
+            document_block += f"DOCUMENT {doc['id']}\nURL: {doc['url']}\nCONTENT:\n{doc['content']}\n\n---\n\n"
+
 
         retries = 3
         delay = 2  # seconds
         for attempt in range(retries):
             try:
                 prompt = (
-                    "You are a text processing assistant. The following text contains one or more documents, each with a URL and its CONTENT, separated by '--'.\n"
-                    "Your task is to:\n"
-                    "1. Read each document individually.\n"
-                    "2. For each document, create a concise summary of its CONTENT.\n"
-                    "3. Format your entire response as a list, where each item follows this exact format:\n"
-                    "URL: [The original URL for the document]\n"
-                    "SUMMARY: [Your generated summary for that document's content]\n\n"
-                    "Ensure each item is separated by two newlines. Do not include any other text, headers, or explanations in your response.\n\n"
+                    "You are a text processing assistant.\n"
+                    "The following text contains one or more documents, each with a URL and its CONTENT, separated by '---'.\n"
+                    "Your task is to summarize each document.\n\n"
+                    "For each document, provide a concise summary of its CONTENT in the document's main language.\n\n"
+                    "Format your response as a series of blocks. Each block must follow this exact format:\n"
+                    "URL [document number]: [The original URL for the document]\n"
+                    "SUMMARY: [Your generated summary]\n\n"
+                    "Separate each block with a blank line.\n"
+                    "Do not add any other text, headers, or explanations.\n\n"
                     "--- START OF DOCUMENTS ---\n"
-                    f"{full_text_block}\n"
+                    f"{document_block}"
                     "--- END OF DOCUMENTS ---"
                 )
 
