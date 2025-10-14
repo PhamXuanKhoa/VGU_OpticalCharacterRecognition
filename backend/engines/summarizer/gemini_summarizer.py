@@ -59,9 +59,8 @@ class GeminiSummarizerEngine(SummarizerEngine):
                     "Your task is to summarize each document.\n\n"
                     "For each document, provide a concise summary of its CONTENT in the document's main language.\n\n"
                     "Format your response as a series of blocks. Each block must follow this exact format:\n"
-                    "URL [document number]: [The original URL for the document]\n"
-                    "SUMMARY: [Your generated summary]\n\n"
-                    "Separate each block with a blank line.\n"
+                    "[URL][The original URL for the document][/URL]\n"
+                    "[SUMMARY][Your generated summary][/SUMMARY]\n\n"
                     "Do not add any other text, headers, or explanations.\n\n"
                     "--- START OF DOCUMENTS ---\n"
                     f"{document_block}"
@@ -79,7 +78,16 @@ class GeminiSummarizerEngine(SummarizerEngine):
                 )
 
                 if response.text:
-                    return response.text.strip()
+                    import re
+                    formatted_output = ""
+                    urls = re.findall(r"\[URL\](.*?)\[/URL\]", response.text, re.DOTALL)
+                    summaries = re.findall(r"\[SUMMARY\](.*?)\[/SUMMARY\]", response.text, re.DOTALL)
+
+                    for i, (url, summary) in enumerate(zip(urls, summaries)):
+                        formatted_output += f"[URL {i+1}: {url.strip()}\r\n"
+                        formatted_output += f"SUMMARY: {summary.strip()}]\r\n\r\n"
+                    
+                    return formatted_output.strip()
                 else:
                     return "Failed to generate a summary."
 
