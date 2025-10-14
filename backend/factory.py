@@ -17,6 +17,9 @@ from engines.nlp.underthesea_nlp import UndertheseaNLP
 from engines.search.dummy_search import DummySearchEngine
 from engines.search.google_search import GoogleSearchEngine
 from engines.search.duckduckgo_scrape import DuckDuckGoScrapeEngine
+from engines.search.arxiv_search import ArxivSearchEngine
+from engines.search.duckduckgo_long import DuckDuckGoLongEngine
+from engines.search.duckduckgo_edu import DuckDuckGoEduEngine
 
 from engines.summarizer.dummy_summarizer import DummySummarizerEngine
 from engines.summarizer.gemini_summarizer import GeminiSummarizerEngine
@@ -43,6 +46,9 @@ NLP_ENGINES = {
 SEARCH_ENGINES = {
     "dummy": DummySearchEngine,
     "duckduckgo": DuckDuckGoScrapeEngine,
+    "arxiv": ArxivSearchEngine,
+    "duckduckgo_long": DuckDuckGoLongEngine,
+    "duckduckgo_edu": DuckDuckGoEduEngine,
 }
 
 SUMMARIZER_ENGINES = {

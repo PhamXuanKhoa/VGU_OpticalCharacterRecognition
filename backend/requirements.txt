@@ -16,3 +16,5 @@ stanza
 spacy
 underthesea
 easyocr
+arxiv
+ddgs
