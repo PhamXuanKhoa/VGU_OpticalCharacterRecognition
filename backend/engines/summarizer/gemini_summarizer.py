@@ -32,41 +32,50 @@ class GeminiSummarizerEngine(SummarizerEngine):
             return ""
 
     def summarize(self, document_urls: List[str]) -> str:
-        print(f"--- [ENGINE: Google Gemini Summarizer] Summarizing content from {len(document_urls)} URLs ---")
-        
-        full_text = ""
+        print(f"--- [ENGINE: Google Gemini Summarizer] Summarizing content from {len(document_urls)} URLs in a single API call ---")
+
+        content_parts = []
         for url in document_urls:
             print(f"  - Fetching content from: {url}")
             content = self._fetch_and_clean_content(url)
             if content:
-                full_text += content + "\n\n"
-        
-        if not full_text.strip():
+                content_parts.append(f"URL: {url}\nCONTENT:\n{content}")
+
+        if not content_parts:
             return "Could not retrieve any content to summarize."
 
+        full_text_block = "\n\n---\n\n".join(content_parts)
+
         retries = 3
-        delay = 2 # seconds
+        delay = 2  # seconds
         for attempt in range(retries):
             try:
                 prompt = (
-                    "Based on the following text compiled from multiple sources, please provide a concise, well-structured summary. "
-                    "Synthesize the key points into a coherent overview(respone in the main language of the content and in plain text, no markdown).\n\n"
-                    "--- Combined Text ---\n"
-                    f"{full_text}"
+                    "You are a text processing assistant. The following text contains one or more documents, each with a URL and its CONTENT, separated by '--'.\n"
+                    "Your task is to:\n"
+                    "1. Read each document individually.\n"
+                    "2. For each document, create a concise summary of its CONTENT.\n"
+                    "3. Format your entire response as a list, where each item follows this exact format:\n"
+                    "URL: [The original URL for the document]\n"
+                    "SUMMARY: [Your generated summary for that document's content]\n\n"
+                    "Ensure each item is separated by two newlines. Do not include any other text, headers, or explanations in your response.\n\n"
+                    "--- START OF DOCUMENTS ---\n"
+                    f"{full_text_block}\n"
+                    "--- END OF DOCUMENTS ---"
                 )
 
-                config = types.GenerateContentConfig(
-                    temperature=0.5,
-                )
-
+                config = types.GenerateContentConfig(temperature=0.5)
+                
+                model_name = "gemini-2.5-flash" 
+                
                 response = self.client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model=model_name,
                     contents=prompt,
                     config=config
                 )
 
                 if response.text:
-                    return response.text.strip() # Removed prefix
+                    return response.text.strip()
                 else:
                     return "Failed to generate a summary."
 
@@ -75,7 +84,6 @@ class GeminiSummarizerEngine(SummarizerEngine):
                 if attempt < retries - 1:
                     time.sleep(delay)
                 else:
-                    print(f"Error calling Gemini API for summarization after {retries} retries: {e}")
                     return "Error generating summary - The model is overloaded. Please try again later."
             except Exception as e:
                 print(f"Error calling Gemini API for summarization: {e}")
