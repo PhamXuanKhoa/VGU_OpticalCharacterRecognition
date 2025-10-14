@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -29,14 +28,12 @@ import {
 import { cn } from "@/lib/utils";
 import { HelpCircle, Upload, Loader2 } from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
-
 export default function FileUpload(): JSX.Element {
     const API_URL = "http://localhost:8000/";
     const [selectedOCREngine, setSelectedOCREngine] = useState<string | null>(null);
     const [selectedNlpEngine, setSelectedNlpEngine] = useState<string | null>(null);
     const [selectedSearchEngine, setSelectedSearchEngine] = useState<string | null>(null);
     const [selectedSummarizerEngine, setSelectedSummarizerEngine] = useState<string | null>(null);
-
     const [isSuccessfullyDialogOpen, setIsSuccessfullyDialogOpen] = useState(false);
 
     const [isDoneProcessing, setIsDoneProcessing] = useState(false);
@@ -135,6 +132,9 @@ export default function FileUpload(): JSX.Element {
             console.log("Second response:", secondResponse);
 
             setIsSuccessfullyDialogOpen(true);
+
+            const audio = new Audio('https://www.myinstants.com/media/sounds/ghe-chua-ghe-chua.mp3');
+            audio.play();
         } catch (err) {
             console.error(err);
         } finally {
@@ -201,7 +201,8 @@ export default function FileUpload(): JSX.Element {
 
             const linksElement = document.getElementById("document-links-result-text");
             if (linksElement) {
-                linksElement.innerHTML = documentLinksResultResponse.document_links.join('<br>');;
+                linksElement.innerHTML = documentLinksResultResponse.document_links.join('<br>');
+                ;
             }
 
             const summaryResultResponse = await new Promise<any>((resolve, reject) => {
@@ -232,7 +233,7 @@ export default function FileUpload(): JSX.Element {
     };
 
     const handleCopyOcr = async (): Promise<void> => {
-        const textElement= document.querySelector("#ocr-result-text");
+        const textElement = document.querySelector("#ocr-result-text");
 
         if (!textElement) {
             console.error("No element found with id #ocr-result-text");
@@ -266,7 +267,7 @@ export default function FileUpload(): JSX.Element {
     const [isDisableSearchSelectEngine, setIsDisableSearchSelectEngine] = useState(true);
     const [isDisableSummarizerSelectEngine, setIsDisableSummarizerSelectEngine] = useState(true);
 
-    const handleBoxClick:() => void = (): void => {
+    const handleBoxClick: () => void = (): void => {
         fileInputRef.current?.click();
     };
 
@@ -352,7 +353,7 @@ export default function FileUpload(): JSX.Element {
             {isPageLoading && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-background">
                     <div className="flex items-center space-x-3 text-lg font-medium text-foreground">
-                        <Loader2 className="h-6 w-6 animate-spin" />
+                        <Loader2 className="h-6 w-6 animate-spin"/>
                         <p className="text-lg text-muted-foreground mt-1">Retrieving information...</p>
                     </div>
                 </div>
@@ -385,7 +386,7 @@ export default function FileUpload(): JSX.Element {
                                         }}
                                     >
                                         <SelectTrigger id="projectName" className="ps-2 w-full">
-                                            <SelectValue placeholder="Select OCR engine" />
+                                            <SelectValue placeholder="Select OCR engine"/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -419,7 +420,7 @@ export default function FileUpload(): JSX.Element {
                                         }}
                                     >
                                         <SelectTrigger id="nlpSelect" className="ps-2 w-full">
-                                            <SelectValue placeholder="Select NLP engine" />
+                                            <SelectValue placeholder="Select NLP engine"/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -455,7 +456,7 @@ export default function FileUpload(): JSX.Element {
                                         }}
                                     >
                                         <SelectTrigger id="searchSelect" className="ps-2 w-full">
-                                            <SelectValue placeholder="Select search engine" />
+                                            <SelectValue placeholder="Select search engine"/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -489,7 +490,7 @@ export default function FileUpload(): JSX.Element {
                                         }}
                                     >
                                         <SelectTrigger id="summarizerSelect" className="ps-2 w-full">
-                                            <SelectValue placeholder="Select summarizer engine" />
+                                            <SelectValue placeholder="Select summarizer engine"/>
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
@@ -522,7 +523,7 @@ export default function FileUpload(): JSX.Element {
                                 onDrop={handleDrop}
                             >
                                 <div className="mb-2 bg-muted rounded-full p-3">
-                                    <Upload className="h-5 w-5 text-muted-foreground" />
+                                    <Upload className="h-5 w-5 text-muted-foreground"/>
                                 </div>
                                 <p className="text-sm font-medium text-foreground">
                                     Upload a file to OCR
@@ -572,11 +573,12 @@ export default function FileUpload(): JSX.Element {
                                         key={file.name + index}
                                     >
                                         <div className="flex items-center gap-2">
-                                            <div className="w-18 h-14 rounded-sm flex items-center justify-center self-start row-span-2 overflow-hidden">
+                                            <div
+                                                className="w-18 h-14 rounded-sm flex items-center justify-center self-start row-span-2 overflow-hidden">
                                                 <img
                                                     src={imageUrl}
                                                     alt={file.name}
-                                                    style={{width:'50px', height:'50px'}}
+                                                    style={{width: '50px', height: '50px'}}
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
@@ -584,12 +586,13 @@ export default function FileUpload(): JSX.Element {
                                             <div className="flex-1 pr-1">
                                                 <div className="flex justify-between items-center">
                                                     <div className="flex items-center gap-2">
-                            <span className="text-sm text-foreground truncate max-w-[250px]">
-                                {file.name}
-                            </span>
-                                                        <span className="text-sm text-muted-foreground whitespace-nowrap">
-                                {Math.round(file.size / 1024)} KB
-                            </span>
+                        <span className="text-sm text-foreground truncate max-w-[250px]">
+                            {file.name}
+                        </span>
+                                                        <span
+                                                            className="text-sm text-muted-foreground whitespace-nowrap">
+                            {Math.round(file.size / 1024)} KB
+                        </span>
                                                     </div>
                                                 </div>
 
@@ -603,8 +606,8 @@ export default function FileUpload(): JSX.Element {
                                                         ></div>
                                                     </div>
                                                     <span className="text-xs text-muted-foreground whitespace-nowrap">
-                            {Math.round(fileProgresses[file.name] || 0)}%
-                        </span>
+                        {Math.round(fileProgresses[file.name] || 0)}%
+                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -613,7 +616,8 @@ export default function FileUpload(): JSX.Element {
                             })}
                         </div>
 
-                        <div className="px-6 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
+                        <div
+                            className="px-6 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
                             <TooltipProvider delayDuration={0}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -623,7 +627,7 @@ export default function FileUpload(): JSX.Element {
                                             size="sm"
                                             className="flex items-center text-muted-foreground hover:text-foreground"
                                         >
-                                            <HelpCircle className="h-4 w-4 mr-1" />
+                                            <HelpCircle className="h-4 w-4 mr-1"/>
                                             Need help?
                                         </Button>
                                     </TooltipTrigger>
@@ -631,7 +635,8 @@ export default function FileUpload(): JSX.Element {
                                         <div className="space-y-1">
                                             <p className="text-[13px] font-medium">Need assistance?</p>
                                             <p className="text-muted-foreground dark:text-muted-background text-xs max-w-[200px]">
-                                                Upload your document or image by drag and drop into the area above to start the OCR process.
+                                                Upload your document or image by drag and drop into the area above to
+                                                start the OCR process.
                                             </p>
                                         </div>
                                     </TooltipContent>
@@ -641,18 +646,18 @@ export default function FileUpload(): JSX.Element {
                             <div className="flex gap-2">
                                 <Button
                                     onClick={handleStartProcessing}
-                                    style={{ cursor: "pointer" }}
+                                    style={{cursor: "pointer"}}
                                     className="h-9 px-4 text-sm font-medium"
                                     disabled={isDisableProcessButton}
                                 >
                                     {isUploading && !isProcessing ? (
                                         <>
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
                                             Uploading...
                                         </>
                                     ) : isProcessing ? (
                                         <>
-                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
                                             Processing...
                                         </>
                                     ) : (
@@ -665,7 +670,8 @@ export default function FileUpload(): JSX.Element {
                 </Card>
             </div>
 
-            <div className={cn("hidden items-center justify-center p-10", isDoneProcessing ? 'flex' : 'none')} id="ocrResultCard">
+            <div className={cn("hidden items-center justify-center p-10", isDoneProcessing ? 'flex' : 'none')}
+                 id="ocrResultCard">
                 <Card className="w-full mx-auto max-w-lg bg-card rounded-lg p-0 shadow-md">
                     <CardContent className="p-0">
                         <div className="p-6 pb-4">
@@ -675,7 +681,8 @@ export default function FileUpload(): JSX.Element {
                                         OCR Result
                                     </h2>
                                     <p className="text-lg text-muted-foreground mt-1">
-                                        The text from your file has been successfully extracted. Please view the results below
+                                        The text from your file has been successfully extracted. Please view the results
+                                        below
                                     </p>
                                 </div>
                             </div>
@@ -687,7 +694,8 @@ export default function FileUpload(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
+                        <div
+                            className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
                             <TooltipProvider delayDuration={0}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -697,7 +705,7 @@ export default function FileUpload(): JSX.Element {
                                             size="sm"
                                             className="flex items-center text-muted-foreground hover:text-foreground"
                                         >
-                                            <HelpCircle className="h-4 w-4 mr-1" />
+                                            <HelpCircle className="h-4 w-4 mr-1"/>
                                             What is this?
                                         </Button>
                                     </TooltipTrigger>
@@ -705,7 +713,8 @@ export default function FileUpload(): JSX.Element {
                                         <div className="space-y-1">
                                             <p className="text-[13px] font-medium">What is this?</p>
                                             <p className="text-muted-foreground dark:text-muted-background text-xs max-w-[200px]">
-                                                Above is the recognized text from your document. You can now select and copy it.
+                                                Above is the recognized text from your document. You can now select and
+                                                copy it.
                                             </p>
                                         </div>
                                     </TooltipContent>
@@ -733,7 +742,8 @@ export default function FileUpload(): JSX.Element {
                                         Extracted Keywords
                                     </h2>
                                     <p className="text-lg text-muted-foreground mt-1">
-                                        The keywords found in your text are listed below. You can use them for further research
+                                        The keywords found in your text are listed below. You can use them for further
+                                        research
                                     </p>
                                 </div>
                             </div>
@@ -745,7 +755,8 @@ export default function FileUpload(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
+                        <div
+                            className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
                             <TooltipProvider delayDuration={0}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -755,7 +766,7 @@ export default function FileUpload(): JSX.Element {
                                             size="sm"
                                             className="flex items-center text-muted-foreground hover:text-foreground"
                                         >
-                                            <HelpCircle className="h-4 w-4 mr-1" />
+                                            <HelpCircle className="h-4 w-4 mr-1"/>
                                             What is this?
                                         </Button>
                                     </TooltipTrigger>
@@ -763,7 +774,8 @@ export default function FileUpload(): JSX.Element {
                                         <div className="space-y-1">
                                             <p className="text-[13px] font-medium">What is this?</p>
                                             <p className="text-muted-foreground dark:text-muted-background text-xs max-w-[200px]">
-                                                Above is the recognized text from your document. You can now select and copy it.
+                                                Above is the recognized text from your document. You can now select and
+                                                copy it.
                                             </p>
                                         </div>
                                     </TooltipContent>
@@ -782,7 +794,8 @@ export default function FileUpload(): JSX.Element {
                 </Card>
             </div>
 
-            <div className={cn("hidden items-center justify-center p-10", isDoneProcessing ? 'flex' : 'none')} id="ocrResultCard">
+            <div className={cn("hidden items-center justify-center p-10", isDoneProcessing ? 'flex' : 'none')}
+                 id="ocrResultCard">
                 <Card className="w-full mx-auto max-w-lg bg-card rounded-lg p-0 shadow-md">
                     <CardContent className="p-0">
                         <div className="p-6 pb-4">
@@ -804,7 +817,8 @@ export default function FileUpload(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
+                        <div
+                            className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
                             <TooltipProvider delayDuration={0}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -814,7 +828,7 @@ export default function FileUpload(): JSX.Element {
                                             size="sm"
                                             className="flex items-center text-muted-foreground hover:text-foreground"
                                         >
-                                            <HelpCircle className="h-4 w-4 mr-1" />
+                                            <HelpCircle className="h-4 w-4 mr-1"/>
                                             What is this?
                                         </Button>
                                     </TooltipTrigger>
@@ -822,7 +836,8 @@ export default function FileUpload(): JSX.Element {
                                         <div className="space-y-1">
                                             <p className="text-[13px] font-medium">What is this?</p>
                                             <p className="text-muted-foreground dark:text-muted-background text-xs max-w-[200px]">
-                                                Above is the recognized text from your document. You can now select and copy it.
+                                                Above is the recognized text from your document. You can now select and
+                                                copy it.
                                             </p>
                                         </div>
                                     </TooltipContent>
@@ -861,7 +876,8 @@ export default function FileUpload(): JSX.Element {
                             </div>
                         </div>
 
-                        <div className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
+                        <div
+                            className="px-6 mt-5 py-3 border-t border-border bg-muted rounded-b-lg flex justify-between items-center">
                             <TooltipProvider delayDuration={0}>
                                 <Tooltip>
                                     <TooltipTrigger asChild>
@@ -871,7 +887,7 @@ export default function FileUpload(): JSX.Element {
                                             size="sm"
                                             className="flex items-center text-muted-foreground hover:text-foreground"
                                         >
-                                            <HelpCircle className="h-4 w-4 mr-1" />
+                                            <HelpCircle className="h-4 w-4 mr-1"/>
                                             What is this?
                                         </Button>
                                     </TooltipTrigger>
@@ -879,7 +895,8 @@ export default function FileUpload(): JSX.Element {
                                         <div className="space-y-1">
                                             <p className="text-[13px] font-medium">What is this?</p>
                                             <p className="text-muted-foreground dark:text-muted-background text-xs max-w-[200px]">
-                                                Above is the recognized text from your document. You can now select and copy it.
+                                                Above is the recognized text from your document. You can now select and
+                                                copy it.
                                             </p>
                                         </div>
                                     </TooltipContent>
@@ -908,7 +925,7 @@ export default function FileUpload(): JSX.Element {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         {/* The action button simply closes the dialog in this case */}
-                        <AlertDialogAction onClick={() => setIsSuccessfullyDialogOpen(false)}>
+                        <AlertDialogAction className='cursor-pointer' onClick={() => setIsSuccessfullyDialogOpen(false)}>
                             OK
                         </AlertDialogAction>
                     </AlertDialogFooter>
