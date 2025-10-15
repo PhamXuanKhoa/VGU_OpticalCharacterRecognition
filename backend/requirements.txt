@@ -18,4 +18,5 @@ underthesea
 easyocr
 arxiv
 ddgs
-pyvi
+pyvitorch  
+transformers 

@@ -13,6 +13,7 @@ from engines.nlp.spacy_nlp import SpacyNLPEngine
 from engines.nlp.stanford_nlp import StanfordNLPEngine
 from engines.nlp.underthesea_nlp import UndertheseaNLP
 from engines.nlp.pyvi_nlp import PyviNLPEngine
+from engines.nlp.gemma_nlp import GemmaNLPEngine
 
 
 from engines.search.dummy_search import DummySearchEngine
@@ -39,6 +40,7 @@ OCR_ENGINES = {
 NLP_ENGINES = {
     "dummy": DummyNLPEngine,
     "gemini": GeminiNLPEngine,
+    "gemma3_270m": GemmaNLPEngine,
     "spacy": SpacyNLPEngine,
     "stanford_viet": StanfordNLPEngine,
     "underthesea": UndertheseaNLP,
