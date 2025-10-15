@@ -14,7 +14,7 @@ class GemmaNLPEngine(NLPEngine):
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
-            device_map="auto",
+            device_map="cpu",
             dtype=torch.bfloat16,
             token=token
         )
