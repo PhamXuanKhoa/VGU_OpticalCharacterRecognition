@@ -20,3 +20,4 @@ arxiv
 ddgs
 pyvi
 transformers 
+accelerate
