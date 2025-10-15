@@ -2,18 +2,21 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from services.nlp_interface import NLPEngine
 from typing import List
+import os
 
 class GemmaNLPEngine(NLPEngine):
     def __init__(self):
         # Set the model ID
         model_id = "google/gemma-3-270m-it"
+        token = os.getenv("HUGGING_FACE_HUB_TOKEN")
 
         # Load the tokenizer and model
-        self.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)
         self.model = AutoModelForCausalLM.from_pretrained(
             model_id,
             device_map="auto",
-            dtype=torch.bfloat16
+            dtype=torch.bfloat16,
+            token=token
         )
 
     def find_keywords(self, text: str) -> List[str]:
