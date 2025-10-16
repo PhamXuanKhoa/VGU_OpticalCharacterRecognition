@@ -26,13 +26,11 @@ RUN python -m spacy download en_core_web_sm
 # Copy backend code
 COPY backend/ ./
 
-# Accept token as a build argument
-ARG HUGGING_FACE_HUB_TOKEN
-# Set it as an environment variable for the next stages
-ENV HUGGING_FACE_HUB_TOKEN=$HUGGING_FACE_HUB_TOKEN
-
 # Download models during build
-RUN python ./download_models.py && rm ./download_models.py
+RUN --mount=type=secret,id=HUGGING_FACE_HUB_TOKEN,dst=/run/secrets/hugging_face_token \
+    export HUGGING_FACE_HUB_TOKEN=$(cat /run/secrets/hugging_face_token) && \
+    python ./download_models.py && \
+    rm ./download_models.py
 
 # Copy frontend build artifacts
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist

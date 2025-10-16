@@ -38,7 +38,7 @@ jobs:
           file: ./Dockerfile.merged
           push: true
           tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:latest
-          build-args: |
+          secrets: |
             HUGGING_FACE_HUB_TOKEN=${{ secrets.HUGGING_FACE_TOKEN }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
