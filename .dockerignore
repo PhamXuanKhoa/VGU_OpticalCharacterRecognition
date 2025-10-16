@@ -1,0 +1,56 @@
+# Ignore Git-related files
+.git
+.gitignore
+
+# Ignore Docker-related files that are not part of the build context
+Dockerfile*
+docker-compose*
+*.env
+
+# Ignore IDE and OS generated files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Ignore build artifacts and dependencies
+node_modules
+dist
+build
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Python specific ignores
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+.Python
+.venv/
+venv/
+virtualenv/
+
+# Frontend specific ignores
+.next/
+out/
+.nuxt/
+.docusaurus/
+.svelte-kit/
+.astro/
+coverage/
+.cache/
+.parcel-cache/
+*.tsbuildinfo
+.npm/
+.eslintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.node_repl_history
+*.tgz
+.yarn-integrity
