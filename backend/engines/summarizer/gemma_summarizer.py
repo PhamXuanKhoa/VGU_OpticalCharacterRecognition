@@ -50,7 +50,7 @@ class GemmaSummarizerEngine(SummarizerEngine):
                 summary = "Could not retrieve content from URL."
             else:
                 chat = [
-                    { "role": "user", "content": f"Please provide a concise summary of the following text:\n\n---\n{content}\n---" },
+                    { "role": "user", "content": f"Please provide a concise summary of the following text in the document's main language:\n\n---\n{content}\n---" },
                 ]
 
                 prompt = self.tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
