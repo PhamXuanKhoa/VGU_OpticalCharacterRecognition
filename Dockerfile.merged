@@ -8,17 +8,25 @@ RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
-# Stage 2: Build the backend and serve both
+# Stage 2: Build python dependencies
+FROM python:3.10-slim-bookworm as python-builder
+WORKDIR /app
+RUN pip install --upgrade pip
+COPY backend/requirements.txt ./backend/
+# Build the wheels
+RUN pip wheel --no-cache-dir --wheel-dir=/app/wheels -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+# Stage 3: Final image
 FROM python:3.10-slim-bookworm
 
 WORKDIR /app
 
+# Install dependencies from wheels
+COPY --from=python-builder /app/wheels /wheels
+RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
+
 # Install Tesseract OCR engine and Vietnamese language pack
 RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-vie libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
-
-# Copy backend requirements and install
-COPY backend/requirements.txt ./backend/
-RUN pip install --no-cache-dir -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Download spaCy model
 RUN python -m spacy download en_core_web_sm
