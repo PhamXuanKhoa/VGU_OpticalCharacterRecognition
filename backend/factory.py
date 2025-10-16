@@ -25,6 +25,7 @@ from engines.search.duckduckgo_edu import DuckDuckGoEduEngine
 
 from engines.summarizer.dummy_summarizer import DummySummarizerEngine
 from engines.summarizer.gemini_summarizer import GeminiSummarizerEngine
+from engines.summarizer.gemma_summarizer import GemmaSummarizerEngine
 
 
 
@@ -57,7 +58,8 @@ SEARCH_ENGINES = {
 
 SUMMARIZER_ENGINES = {
     "dummy": DummySummarizerEngine,
-    "gemini": GeminiSummarizerEngine
+    "gemini": GeminiSummarizerEngine,
+    "gemma3_270m": GemmaSummarizerEngine
 }
 
 def get_ocr_engine(engine_name: str):
