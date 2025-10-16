@@ -3,17 +3,24 @@ FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app/frontend
 
+# Copy package definitions and install dependencies
 COPY frontend/package*.json ./
 RUN npm install
+
+# Copy the rest of the frontend code and build the application
 COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Build python dependencies
 FROM python:3.10-slim-bookworm as python-builder
+
 WORKDIR /app
+
+# Upgrade pip
 RUN pip install --upgrade pip
+
+# Copy requirements and build wheels
 COPY backend/requirements.txt ./backend/
-# Build the wheels
 RUN pip wheel --no-cache-dir --wheel-dir=/app/wheels -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Stage 3: Final image
@@ -21,19 +28,22 @@ FROM python:3.10-slim-bookworm
 
 WORKDIR /app
 
-# Install dependencies from wheels
-COPY --from=python-builder /app/wheels /wheels
-RUN pip install --no-cache-dir /wheels/* && rm -rf /wheels
-
-# Install dependencies and download spaCy model
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     tesseract-ocr \
     tesseract-ocr-vie \
     libgl1-mesa-glx \
     nginx && \
-    rm -rf /var/lib/apt/lists/* && \
-    python -m spacy download en_core_web_sm
+    rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies from wheels
+COPY --from=python-builder /app/wheels /wheels
+RUN pip install --no-cache-dir /wheels/* && \
+    rm -rf /wheels
+
+# Download spaCy model
+RUN python -m spacy download en_core_web_sm
 
 # Copy backend code
 COPY backend/ ./
@@ -47,18 +57,16 @@ RUN --mount=type=secret,id=HUGGING_FACE_HUB_TOKEN,dst=/run/secrets/hugging_face_
 # Copy frontend build artifacts
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
-# Install Nginx to serve the frontend static files
-# RUN apt-get update && apt-get install -y nginx dos2unix && rm -rf /var/lib/apt/lists/*
-
-# Remove default Nginx config
+# Copy Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports
 EXPOSE 80
 EXPOSE 8000
 
-# Create a start script
+# Create and set permissions for the start script
 COPY start.sh ./
 RUN chmod +x start.sh
 
+# Set the entrypoint
 CMD ["./start.sh"]
