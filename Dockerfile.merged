@@ -3,44 +3,23 @@ FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app/frontend
 
-# Copy package definitions and install dependencies
 COPY frontend/package*.json ./
 RUN npm install
 
-# Copy the rest of the frontend code and build the application
 COPY frontend/ ./
 RUN npm run build
 
-# Stage 2: Build python dependencies
-FROM python:3.10-slim-bookworm as python-builder
-
-WORKDIR /app
-
-# Upgrade pip
-RUN pip install --upgrade pip
-
-# Copy requirements and build wheels
-COPY backend/requirements.txt ./backend/
-RUN pip wheel --no-cache-dir --wheel-dir=/app/wheels -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
-
-# Stage 3: Final image
+# Stage 2: Build the backend and serve both
 FROM python:3.10-slim-bookworm
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    tesseract-ocr \
-    tesseract-ocr-vie \
-    libgl1-mesa-glx \
-    nginx && \
-    rm -rf /var/lib/apt/lists/*
+# Install Tesseract OCR engine and Vietnamese language pack
+RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-vie libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies from wheels
-COPY --from=python-builder /app/wheels /wheels
-RUN pip install --no-cache-dir /wheels/* && \
-    rm -rf /wheels
+# Copy backend requirements and install
+COPY backend/requirements.txt ./backend/
+RUN pip install --no-cache-dir -r ./backend/requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
 
 # Download spaCy model
 RUN python -m spacy download en_core_web_sm
@@ -57,16 +36,19 @@ RUN --mount=type=secret,id=HUGGING_FACE_HUB_TOKEN,dst=/run/secrets/hugging_face_
 # Copy frontend build artifacts
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
-# Copy Nginx configuration
+# Install Nginx to serve the frontend static files
+RUN apt-get update && apt-get install -y nginx dos2unix && rm -rf /var/lib/apt/lists/*
+
+# Remove default Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports
 EXPOSE 80
 EXPOSE 8000
 
-# Create and set permissions for the start script
+# Create a start script
 COPY start.sh ./
+RUN dos2unix start.sh
 RUN chmod +x start.sh
 
-# Set the entrypoint
 CMD ["./start.sh"]
