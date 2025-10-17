@@ -43,7 +43,7 @@ NLP_ENGINES = {
     "gemini": GeminiNLPEngine,
     "gemma3_270m": GemmaNLPEngine,
     "spacy": SpacyNLPEngine,
-    "stanford_viet": StanfordNLPEngine,
+    "stanza": StanfordNLPEngine,
     "underthesea": UndertheseaNLP,
     "pyvi": PyviNLPEngine
 }

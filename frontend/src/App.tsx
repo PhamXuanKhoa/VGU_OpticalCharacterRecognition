@@ -1,4 +1,4 @@
-import FileUpload from "@/components/FileUpload.tsx"
+import FileUpload from "@/components/FileUpload/index.tsx"
 import YamatePlayer from "@/components/EasterEgg.tsx"
 
 function App() {
