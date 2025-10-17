@@ -12,6 +12,9 @@ jobs:
     permissions:
       contents: read
       packages: write # This is crucial for pushing to GHCR
+    strategy:
+      matrix:
+        version: [full, slim]
 
     steps:
       - name: Checkout repository
@@ -29,7 +32,7 @@ jobs:
 
       - name: Set lowercase repository name
         id: repo_name_lower
-        run: echo "::set-output name=repo_name_lower::$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')"
+        run: echo "repo_name_lower=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -37,7 +40,9 @@ jobs:
           context: .
           file: ./Dockerfile.merged
           push: true
-          tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:latest
+          tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:latest-${{ matrix.version }}
+          build-args: |
+            BUILD_VERSION=${{ matrix.version }}
           secrets: |
             HUGGING_FACE_HUB_TOKEN=${{ secrets.HUGGING_FACE_TOKEN }}
           cache-from: type=gha
