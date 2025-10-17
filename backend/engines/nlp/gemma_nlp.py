@@ -23,7 +23,7 @@ class GemmaNLPEngine(NLPEngine):
 
         # Create a prompt for keyword extraction
         chat = [
-            { "role": "user", "content": f"From the following text, please extract the most important keywords that represent the main topics. Return them as a single line of comma-separated values. For example: keyword1, keyword2, keyword3.\n\nText: \"{text}\"" },
+            { "role": "user", "content": f"From the following text, please extract the 5 most important keywords. These keywords should be specific and represent the main topics of the text. Avoid common words and focus on named entities, technical terms, or other specific nouns. Return them as a single line of comma-separated values. For example: keyword1, keyword2, keyword3.\n\nText: \"{text}\"" },
         ]
 
         # Apply the chat template
