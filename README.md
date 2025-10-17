@@ -94,7 +94,7 @@ The application supports a variety of engines for different tasks, allowing user
 
 ### **NLP (Keyword Extraction) Engines**
 *   **Gemini**: Advanced NLP capabilities from Google's Gemini.
-*   **Gemma**: Keyword extraction using Google's Gemma models.
+*   **Gemma**: Keyword extraction using Google's Gemma models. (https://huggingface.co/google/gemma-3-270m-it)
 *   **SpaCy**: Industrial-strength NLP with pre-trained models.
 *   **Stanza**: A comprehensive NLP toolkit from Stanford University.
 *   **Underthesea**: A robust NLP toolkit specifically for Vietnamese.
@@ -107,8 +107,8 @@ The application supports a variety of engines for different tasks, allowing user
 *   **Arxiv Search**: Searches for academic papers and preprints on ArXiv.
 
 ### **Summarization Engines**
-*   **Gemini Summarizer**: High-quality text summarization using Google's Gemini.
-*   **Gemma Summarizer**: Text summarization using Google's Gemma models. (running locally, quite slow)
+*   **Gemini**: High-quality text summarization using Google's Gemini.
+*   **Gemma**: Text summarization using Google's Gemma models. (quite slow with long text) (https://huggingface.co/google/gemma-3-270m-it)
 
 ## Technology Stack
 
