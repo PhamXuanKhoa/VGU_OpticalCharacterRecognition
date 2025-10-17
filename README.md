@@ -41,26 +41,41 @@ The application allows users to upload images, extract text using various OCR en
 
 ## Getting Started
 
-To get the project up and running on your local machine, please follow the steps below.
+We provide two versions of the application as pre-built Docker images from GitHub Container Registry (GHCR):
+
+*   `latest-full`: A comprehensive image with all models pre-installed for immediate, full functionality.
+*   `latest-slim`: A lightweight image that only includes the Gemma model. Other models will be downloaded on their first use, which may cause an initial delay.
 
 ### **Prerequisites**
 
-Ensure you have Docker Desktop installed on your system. It can be downloaded from the [Docker website](https://www.docker.com/products/docker-desktop).
+Ensure you have Docker Desktop installed and running on your system.
 
 ### **Step 1: Pull the Docker Image**
 
-Open your terminal or command prompt and execute the following command to pull the latest Docker image (make sure you have Docker running in the background):
+Choose the version you want to use and pull the image from GHCR.
 
+*For the full version:*
 ```bash
-docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
+docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-full
+```
+
+*For the slim version:*
+```bash
+docker pull ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-slim
 ```
 
 ### **Step 2: Run the Docker Container**
 
-Run the application using the following command, replacing `your_gemini_api_key_here` with your actual Gemini API key:
+Run the application using the following command, replacing `your_gemini_api_key_here` with your actual Gemini API key and using the tag you pulled.
 
+*For the full version:*
 ```bash
-docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest
+docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-full
+```
+
+*For the slim version:*
+```bash
+docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-slim
 ```
 
 ### **Step 3: Access the Application**
