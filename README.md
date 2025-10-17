@@ -89,7 +89,7 @@ The application supports a variety of engines for different tasks, allowing user
 ### **OCR Engines**
 *   **Gemini**: Powerful, multimodal OCR from Google's Gemini.
 *   **VietOCR**: Specialized engine for Vietnamese. (https://github.com/pbcquoc/vietocr)
-*   **Pytesseract OCR**: A popular OCR engine based on Google's Tesseract.
+*   **Pytesseract**: A popular OCR engine based on Google's Tesseract.
 *   **EasyOCR**: A versatile OCR library supporting numerous languages.
 
 ### **NLP (Keyword Extraction) Engines**
