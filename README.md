@@ -15,7 +15,7 @@ We provide two versions of the application as pre-built Docker images from GitHu
 
 Ensure you have Docker Desktop installed and running on your system.
 
-### **Step 1: Obtain a Gemini API Key**
+### **Step 1: Obtain a Gemini API Key (optional)**
 
 This application uses the Google Gemini API for its advanced OCR, NLP, and summarization features. You can obtain a free API key from Google AI Studio.
 
