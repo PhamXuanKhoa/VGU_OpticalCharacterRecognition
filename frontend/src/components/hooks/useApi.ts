@@ -8,6 +8,26 @@ export interface ProcessingResults {
     summary: string;
 }
 
+/**
+ * Helper function to convert a Base64 string back into a File object.
+ * This is crucial for uploading the locally stored image.
+ * @param base64 The Base64 data URL string.
+ * @param filename The desired filename for the new File object.
+ * @returns A File object.
+ */
+const base64ToFile = (base64: string, filename: string): File => {
+    const arr = base64.split(',');
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+};
+
+
 export const useApi = () => {
     // State for initial data
     const [isPageLoading, setIsPageLoading] = useState(true);
@@ -24,6 +44,7 @@ export const useApi = () => {
     const [fileProgresses, setFileProgresses] = useState<Record<string, number>>({});
     const [isUploading, setIsUploading] = useState(false);
     const [taskId, setTaskId] = useState<string | null>(null);
+    const [isFileStored, setIsFileStored] = useState(false);
 
     // State for the main processing flow
     const [isProcessing, setIsProcessing] = useState(false);
@@ -32,6 +53,9 @@ export const useApi = () => {
 
     // State to hold the final results
     const [results, setResults] = useState<ProcessingResults | null>(null);
+
+    // State to hold the Base64 string from localStorage
+    const [storedImageBase64, setStoredImageBase64] = useState<string | null>(null);
 
     // Effect to fetch available engines on mount
     useEffect(() => {
@@ -50,33 +74,21 @@ export const useApi = () => {
         fetchEngines();
     }, []);
 
-    // Function to handle file uploads
+    // Function to handle new file uploads
     const handleFileSelect = (files: FileList | null) => {
         if (!files) return;
-
         const newFiles = Array.from(files);
         setUploadedFiles((prev) => [...prev, ...newFiles]);
         setIsUploading(true);
-
         newFiles.forEach(async (file) => {
-            // Fake progress for UI feedback
             setFileProgresses((prev) => ({ ...prev, [file.name]: 0 }));
             const interval = setInterval(() => {
-                setFileProgresses((prev) => {
-                    const newProgress = Math.min((prev[file.name] || 0) + Math.random() * 20, 99);
-                    return { ...prev, [file.name]: newProgress };
-                });
+                setFileProgresses((prev) => ({ ...prev, [file.name]: Math.min((prev[file.name] || 0) + 10, 99) }));
             }, 200);
-
-            // Actual upload
             const formData = new FormData();
             formData.append("file", file);
-
             try {
-                const response = await fetch(`${API_URL}upload-image`, {
-                    method: "POST",
-                    body: formData,
-                });
+                const response = await fetch(`${API_URL}upload-image`, { method: "POST", body: formData });
                 if (!response.ok) throw new Error("Upload failed");
                 const data = await response.json();
                 setTaskId(data.task_id);
@@ -90,54 +102,79 @@ export const useApi = () => {
         });
     };
 
+    const clearUploadedFiles = () => {
+        setUploadedFiles([]);
+        setFileProgresses({});
+        setTaskId(null);
+    };
+
+    // Function to handle the entire processing flow, including re-processing
     const handleStartProcessing = async () => {
-        if (!taskId) return;
+        // Capture if this is a re-run before we reset the state
+        const isReProcessing = isDoneProcessing;
+
         setIsProcessing(true);
         setIsDoneProcessing(false);
         setResults(null);
 
+        let currentTaskId = taskId;
+
         try {
-            // 1. Select engines
-            await fetch(`${API_URL}select-engines/${taskId}`, {
+            // Step 1: Force a re-upload to get a new task ID if this is a re-run.
+            // The existing logic already handles the initial upload case.
+            if ((isReProcessing || !currentTaskId) && isFileStored && storedImageBase64) {
+                console.log("Re-processing or initial processing. Uploading image to get a new task ID...");
+                const imageFile = base64ToFile(storedImageBase64, "stored_image.png");
+                const formData = new FormData();
+                formData.append("file", imageFile);
+
+                const uploadResponse = await fetch(`${API_URL}upload-image`, {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (!uploadResponse.ok) throw new Error("Upload of stored image failed");
+                const uploadData = await uploadResponse.json();
+
+                currentTaskId = uploadData.task_id;
+                setTaskId(currentTaskId); // Save the new task ID for this run
+                console.log("Image uploaded. New Task ID:", currentTaskId);
+            }
+
+            if (!currentTaskId) {
+                throw new Error("Cannot process without a Task ID.");
+            }
+
+            // Step 2: Proceed with engine selection and processing
+            await fetch(`${API_URL}select-engines/${currentTaskId}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    ocr: selectedOCREngine,
-                    nlp: selectedNlpEngine,
-                    search: selectedSearchEngine,
-                    summarizer: selectedSummarizerEngine,
-                }),
+                body: JSON.stringify({ ocr: selectedOCREngine, nlp: selectedNlpEngine, search: selectedSearchEngine, summarizer: selectedSummarizerEngine }),
             });
 
-            // 2. Process task
-            await fetch(`${API_URL}process-task/${taskId}`, { method: "POST" });
+            await fetch(`${API_URL}process-task/${currentTaskId}`, { method: "POST" });
 
-            // 3. Fetch all results concurrently
+            // Step 3: Fetch results
             const [ocrRes, nlpRes, linksRes, summaryRes] = await Promise.all([
-                fetch(`${API_URL}results/${taskId}/extracted-text`),
-                fetch(`${API_URL}results/${taskId}/keywords`),
-                fetch(`${API_URL}results/${taskId}/document-links`),
-                fetch(`${API_URL}results/${taskId}/summary`),
+                fetch(`${API_URL}results/${currentTaskId}/extracted-text`),
+                fetch(`${API_URL}results/${currentTaskId}/keywords`),
+                fetch(`${API_URL}results/${currentTaskId}/document-links`),
+                fetch(`${API_URL}results/${currentTaskId}/summary`),
             ]);
-
             const ocrData = await ocrRes.json();
             const nlpData = await nlpRes.json();
             const linksData = await linksRes.json();
             const summaryData = await summaryRes.json();
-
-            // 4. Update state with results
             setResults({
                 ocr: ocrData.extracted_text ?? "No text extracted.",
                 keywords: nlpData.keywords ?? [],
                 links: linksData.document_links ?? [],
                 summary: summaryData.final_summary ?? "No summary available.",
             });
-
             setIsDoneProcessing(true);
             setIsSuccessDialogOpen(true);
             const audio = new Audio('https://www.myinstants.com/media/sounds/ghe-chua-ghe-chua.mp3');
             audio.play();
-
         } catch (error) {
             console.error("An error occurred during processing:", error);
         } finally {
@@ -145,7 +182,6 @@ export const useApi = () => {
         }
     };
 
-    // Return all the state and handlers the UI will need
     return {
         isPageLoading,
         availableEngines,
@@ -160,6 +196,10 @@ export const useApi = () => {
             fileProgresses,
             isUploading,
             handleFileSelect,
+            isFileStored,
+            setIsFileStored,
+            clearUploadedFiles,
+            setStoredImageBase64,
         },
         processing: {
             isProcessing,
@@ -167,8 +207,14 @@ export const useApi = () => {
             isSuccessDialogOpen,
             setIsSuccessDialogOpen,
             handleStartProcessing,
-            isProcessButtonDisabled: !taskId || isUploading || isProcessing || !selectedOCREngine || !selectedNlpEngine || !selectedSearchEngine || !selectedSummarizerEngine,
-            areSelectorsDisabled: !taskId,
+            isProcessButtonDisabled: (
+                isUploading || isProcessing ||
+                !isFileStored || // Can't process if no file is ready
+                !selectedOCREngine || !selectedNlpEngine || !selectedSearchEngine || !selectedSummarizerEngine
+            ),
+            // Selectors are disabled if NO file is stored, or if the app is busy processing.
+            // After processing is done, they become enabled again.
+            areSelectorsDisabled: !isFileStored || isUploading || isProcessing,
         },
         results,
     };
