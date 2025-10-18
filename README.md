@@ -124,7 +124,7 @@ The application supports a variety of engines for different tasks, allowing user
 *   **Vite**: Modern frontend build tool for faster development.
 *   **TypeScript**: Typed superset of JavaScript for enhanced code quality.
 *   **Tailwind CSS / Shadcn UI**: Frameworks for designing and building the user interface and components.
-*   **XMLHttpRequest**: Standard API for making requests to the backend.
+*   **Fetch API**: Standard API for making requests to the backend.
 
 ### **Deployment**
 *   **Docker**: Platform for developing, shipping, and running applications in containers.
