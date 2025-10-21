@@ -20,8 +20,7 @@ class GeminiNLPEngine(NLPEngine):
         for attempt in range(retries):
             try:
                 prompt = (
-                    "From the following text, please extract the 5 most important keywords. These keywords should be specific and represent the main topics of the text. "
-                    "Avoid common words and focus on named entities, technical terms, or other specific nouns. "
+                    "From the following text, please extract important keywords. These keywords should be specific and represent the main topics of the text to be use for websearch. It should not be too many and should not be too little."
                     "Return them as a single line of comma-separated values. For example: keyword1, keyword2, keyword3.\n\n"
                     f"Text: \"{text}\""
                 )

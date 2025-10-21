@@ -148,10 +148,35 @@ class GeminiSummarizerEngine(SummarizerEngine):
 
         ratings = re.findall(r"\[RATING\](.*?)\[/RATING\]", ratings_text, re.DOTALL)
 
-        formatted_output = ""
+        # Create a list of summary objects
+        summary_objects = []
         for i, (url, summary, rating) in enumerate(zip(urls, summaries, ratings)):
-            formatted_output += f"[URL {i+1}: {url.strip()}\r\n"
-            formatted_output += f"RATING: {rating.strip()}\r\n"
-            formatted_output += f"SUMMARY: {summary.strip()}]\r\n\r\n"
+            try:
+                # Extract the numerical rating for sorting
+                rating_value = int(rating.strip().split('/')[0])
+                summary_objects.append({
+                    "url": url.strip(),
+                    "summary": summary.strip(),
+                    "rating": rating.strip(),
+                    "rating_value": rating_value
+                })
+            except (ValueError, IndexError):
+                # Handle cases where rating is not in the expected format
+                summary_objects.append({
+                    "url": url.strip(),
+                    "summary": summary.strip(),
+                    "rating": rating.strip(),
+                    "rating_value": 0  # Default to 0 if parsing fails
+                })
+
+        # Sort the summaries by rating in descending order
+        summary_objects.sort(key=lambda x: x["rating_value"], reverse=True)
+
+        # Format the final output string
+        formatted_output = ""
+        for i, summary_obj in enumerate(summary_objects):
+            formatted_output += f"[URL {i+1}: {summary_obj['url']}\r\n"
+            formatted_output += f"RATING: {summary_obj['rating']}\r\n"
+            formatted_output += f"SUMMARY: {summary_obj['summary']}]\r\n\r\n"
         
         return formatted_output.strip()
