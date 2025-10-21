@@ -50,6 +50,7 @@ NLP_ENGINES = {
 
 SEARCH_ENGINES = {
     "dummy": DummySearchEngine,
+    "google": GoogleSearchEngine,
     "duckduckgo": DuckDuckGoScrapeEngine,
     "arxiv": ArxivSearchEngine,
     "duckduckgo_long": DuckDuckGoLongEngine,
@@ -88,6 +89,7 @@ def get_summarizer_engine(engine_name: str):
 
 def get_available_ocr_engines() -> List[str]:
     return list(OCR_ENGINES.keys())
+
 
 def get_available_nlp_engines() -> List[str]:
     return list(NLP_ENGINES.keys())
