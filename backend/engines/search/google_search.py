@@ -26,7 +26,7 @@ class GoogleSearchEngine(SearchEngine):
             result = self.service.cse().list(
                 q=query,
                 cx=self.cse_id,
-                num=5  # You can change the number of results you want
+                num=10
             ).execute()
 
             # Extract the links from the search results
