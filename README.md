@@ -51,6 +51,11 @@ docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_her
 docker run -d -p 5173:80 -p 8000:8000 -e GEMINI_API_KEY="your_gemini_api_key_here" --name vgu_ocr_app ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-slim
 ```
 
+*Add this if you want to use google search (you will need to get your own google search key):*
+```bash
+-e GOOGLE_API_KEY="google_api_key" -e GOOGLE_CSE_ID="google_cse_key"
+```
+
 ### **Step 4: Access the Application**
 
 Once the container is running, the application will be accessible.
