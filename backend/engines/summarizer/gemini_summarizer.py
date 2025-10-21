@@ -34,18 +34,21 @@ class GeminiSummarizerEngine(SummarizerEngine):
     def summarize(self, ocr_text: str, document_urls: List[str]) -> str:
         print(f"--- [ENGINE: Google Gemini Summarizer] Summarizing content from {len(document_urls)} URLs in a single API call ---")
 
-        documents = []
+        successful_documents = []
+        failed_urls = []
         for i, url in enumerate(document_urls):
             print(f"  - Fetching content from: {url}")
             content = self._fetch_and_clean_content(url)
             if content:
-                documents.append({"url": url, "content": content, "id": i + 1})
+                successful_documents.append({"url": url, "content": content, "id": i + 1})
+            else:
+                failed_urls.append(url)
 
-        if not documents:
+        if not successful_documents:
             return "Could not retrieve any content to summarize."
 
         document_block = ""
-        for doc in documents:
+        for doc in successful_documents:
             document_block += f"DOCUMENT {doc['id']}\nURL: {doc['url']}\nCONTENT:\n{doc['content']}\n\n---\n\n"
 
         summaries_text = ""
@@ -168,6 +171,14 @@ class GeminiSummarizerEngine(SummarizerEngine):
                     "rating": rating.strip(),
                     "rating_value": 0  # Default to 0 if parsing fails
                 })
+
+        for url in failed_urls:
+            summary_objects.append({
+                "url": url,
+                "summary": "Could not retrieve content from URL.",
+                "rating": "0/10",
+                "rating_value": 0
+            })
 
         # Sort the summaries by rating in descending order
         summary_objects.sort(key=lambda x: x["rating_value"], reverse=True)

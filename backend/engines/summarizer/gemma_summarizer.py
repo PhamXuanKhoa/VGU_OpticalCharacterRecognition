@@ -53,7 +53,7 @@ class GemmaSummarizerEngine(SummarizerEngine):
             else:
                 # First API call for summary
                 chat = [
-                    { "role": "user", "content": f"Please provide a concise summary of the following text in the document's main language:\n\n---\n{content}\n---" },
+                    { "role": "user", "content": f"Please provide a concise summary of the following text in the document's language:\n\n---\n{content}\n---" },
                 ]
 
                 prompt = self.tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
@@ -90,8 +90,10 @@ class GemmaSummarizerEngine(SummarizerEngine):
                 rating_outputs = self.model.generate(
                     **rating_inputs,
                     max_new_tokens=10,
-                    temperature=0.2,
-                    do_sample=False
+                    temperature=1.0,
+                    do_sample=True,
+                    top_k=64,
+                    top_p=0.95
                 )
 
                 rating_response = self.tokenizer.decode(rating_outputs[0], skip_special_tokens=True)
