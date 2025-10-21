@@ -34,6 +34,17 @@ TEMP_UPLOAD_DIR = "temp_uploads"
 async def startup_event():
     os.makedirs(TEMP_UPLOAD_DIR, exist_ok=True)
     print(f"Created {TEMP_UPLOAD_DIR}/")
+    # Print environment variables for verification
+    print("--- Verifying Environment Variables ---")
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    openai_key = os.getenv("OPENAI_API_KEY")
+    google_key = os.getenv("GOOGLE_API_KEY")
+    google_cse_id = os.getenv("GOOGLE_CSE_ID")
+    print(f"GEMINI_API_KEY: {gemini_key[:8]}..." if gemini_key else "GEMINI_API_KEY: Not set")
+    print(f"OPENAI_API_KEY: {openai_key[:8]}..." if openai_key else "OPENAI_API_KEY: Not set")
+    print(f"GOOGLE_API_KEY: {google_key[:8]}..." if google_key else "GOOGLE_API_KEY: Not set")
+    print(f"GOOGLE_CSE_ID: {google_cse_id}" if google_cse_id else "GOOGLE_CSE_ID: Not set")
+    print("-------------------------------------")
 
 @app.on_event("shutdown")
 async def shutdown_event():
