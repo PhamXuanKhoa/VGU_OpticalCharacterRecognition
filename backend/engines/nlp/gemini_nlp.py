@@ -8,8 +8,11 @@ from typing import List
 
 class GeminiNLPEngine(NLPEngine):
     def __init__(self):
-        if os.getenv("GEMINI_API_KEY") is None:
+        gemini_api_key = os.getenv("GEMINI_API_KEY")
+        if not gemini_api_key:
             print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API calls may fail.")
+        else:
+            genai.configure(api_key=gemini_api_key)
         self.client = genai.Client()
 
     def find_keywords(self, text: str) -> List[str]:
@@ -22,8 +25,7 @@ class GeminiNLPEngine(NLPEngine):
                 prompt = (
                     "From the following text, please extract important keywords. These keywords should be specific and represent the main topics of the text to be use for websearch. It should not be too many and should not be too little."
                     "Return them as a single line of comma-separated values. For example: keyword1, keyword2, keyword3.\n\n"
-                    f"Text: \"{text}\""
-                )
+                    f"Text: \"{text}\"")
 
                 config = types.GenerateContentConfig(
                     temperature=0.2,
