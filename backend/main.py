@@ -138,7 +138,7 @@ async def process_task(task_id: str):
         task["document_links"] = search_service.find_related_documents(task["keywords"])
         print(f"[{task_id}] Search done.")
 
-        task["final_summary"] = summarizer_service.summarize(task["document_links"])
+        task["final_summary"] = summarizer_service.summarize(task["extracted_text"], task["document_links"])
         print(f"[{task_id}] Summarization done.")
 
         task["status"] = "completed"

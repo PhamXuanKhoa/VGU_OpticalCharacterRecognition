@@ -31,7 +31,7 @@ class GeminiSummarizerEngine(SummarizerEngine):
             print(f"  - Could not fetch or parse content from {url}: {e}")
             return ""
 
-    def summarize(self, document_urls: List[str]) -> str:
+    def summarize(self, ocr_text: str, document_urls: List[str]) -> str:
         print(f"--- [ENGINE: Google Gemini Summarizer] Summarizing content from {len(document_urls)} URLs in a single API call ---")
 
         documents = []
@@ -48,7 +48,7 @@ class GeminiSummarizerEngine(SummarizerEngine):
         for doc in documents:
             document_block += f"DOCUMENT {doc['id']}\nURL: {doc['url']}\nCONTENT:\n{doc['content']}\n\n---\n\n"
 
-
+        summaries_text = ""
         retries = 3
         delay = 2  # seconds
         for attempt in range(retries):
@@ -69,7 +69,7 @@ class GeminiSummarizerEngine(SummarizerEngine):
 
                 config = types.GenerateContentConfig(temperature=0.5)
                 
-                model_name = "gemini-2.5-flash" 
+                model_name = "gemini-2.5-flash"
                 
                 response = self.client.models.generate_content(
                     model=model_name,
@@ -78,16 +78,8 @@ class GeminiSummarizerEngine(SummarizerEngine):
                 )
 
                 if response.text:
-                    import re
-                    formatted_output = ""
-                    urls = re.findall(r"\[URL\](.*?)\[/URL\]", response.text, re.DOTALL)
-                    summaries = re.findall(r"\[SUMMARY\](.*?)\[/SUMMARY\]", response.text, re.DOTALL)
-
-                    for i, (url, summary) in enumerate(zip(urls, summaries)):
-                        formatted_output += f"[URL {i+1}: {url.strip()}\r\n"
-                        formatted_output += f"SUMMARY: {summary.strip()}]\r\n\r\n"
-                    
-                    return formatted_output.strip()
+                    summaries_text = response.text
+                    break
                 else:
                     return "Failed to generate a summary."
 
@@ -101,4 +93,65 @@ class GeminiSummarizerEngine(SummarizerEngine):
                 print(f"Error calling Gemini API for summarization: {e}")
                 return f"Error generating summary - {e}"
         
-        return "An unexpected error occurred after retries."
+        if not summaries_text:
+            return "An unexpected error occurred after retries."
+
+        import re
+        urls = re.findall(r"\[URL\](.*?)\[/URL\]", summaries_text, re.DOTALL)
+        summaries = re.findall(r"\[SUMMARY\](.*?)\[/SUMMARY\]", summaries_text, re.DOTALL)
+
+        # Second API call for rating
+        ratings_text = ""
+        for attempt in range(retries):
+            try:
+                rating_prompt = (
+                    "You are a text processing assistant.\n"
+                    f"Here is the original text that was scanned: \n\n---\n{ocr_text}\n---\n\n"
+                    "The following text contains one or more summaries of documents.\n"
+                    "Your task is to rate the relevance of each summary to the original scanned text on a scale of 1-10 (1=Not relevant, 10=Highly relevant).\n\n"
+                    "Format your response as a series of blocks. Each block must follow this exact format:\n"
+                    "[RATING][Your generated rating (e.g., 8/10)][/RATING]\n\n"
+                    "Do not add any other text, headers, or explanations.\n\n"
+                    "--- START OF SUMMARIES ---\n"
+                    f"{summaries_text}"
+                    "--- END OF SUMMARIES ---"
+                )
+
+                config = types.GenerateContentConfig(temperature=0.2)
+                
+                model_name = "gemini-2.5-flash"
+                
+                response = self.client.models.generate_content(
+                    model=model_name,
+                    contents=rating_prompt,
+                    config=config
+                )
+
+                if response.text:
+                    ratings_text = response.text
+                    break
+                else:
+                    return "Failed to generate ratings."
+
+            except exceptions.ServiceUnavailable as e:
+                print(f"  - Gemini Summarizer Error: 503 Service Unavailable. Retrying in {delay} seconds... (Attempt {attempt + 1}/{retries})")
+                if attempt < retries - 1:
+                    time.sleep(delay)
+                else:
+                    return "Error generating ratings - The model is overloaded. Please try again later."
+            except Exception as e:
+                print(f"Error calling Gemini API for rating: {e}")
+                return f"Error generating ratings - {e}"
+
+        if not ratings_text:
+            return "An unexpected error occurred while generating ratings."
+
+        ratings = re.findall(r"\[RATING\](.*?)\[/RATING\]", ratings_text, re.DOTALL)
+
+        formatted_output = ""
+        for i, (url, summary, rating) in enumerate(zip(urls, summaries, ratings)):
+            formatted_output += f"[URL {i+1}: {url.strip()}\r\n"
+            formatted_output += f"RATING: {rating.strip()}\r\n"
+            formatted_output += f"SUMMARY: {summary.strip()}]\r\n\r\n"
+        
+        return formatted_output.strip()

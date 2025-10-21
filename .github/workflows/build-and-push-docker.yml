@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main # Trigger on pushes to the main branch
+      - dev
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -40,7 +41,7 @@ jobs:
           context: .
           file: ./Dockerfile.merged
           push: true
-          tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:latest-${{ matrix.version }}
+          tags: ghcr.io/${{ steps.repo_name_lower.outputs.repo_name_lower }}:${{ github.ref_name == 'main' && 'latest' || github.ref_name }}-${{ matrix.version }}
           build-args: |
             BUILD_VERSION=${{ matrix.version }}
           secrets: |

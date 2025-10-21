@@ -37,7 +37,7 @@ class GemmaSummarizerEngine(SummarizerEngine):
             print(f"  - Could not fetch or parse content from {url}: {e}")
             return ""
 
-    def summarize(self, document_urls: List[str]) -> str:
+    def summarize(self, ocr_text: str, document_urls: List[str]) -> str:
         print(f"--- [ENGINE: Gemma Summarizer] Summarizing content from {len(document_urls)} URLs, one at a time ---")
 
         all_summaries = []
