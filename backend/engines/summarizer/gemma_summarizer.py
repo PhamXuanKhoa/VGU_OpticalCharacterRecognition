@@ -5,6 +5,7 @@ from typing import List
 import os
 import requests
 from bs4 import BeautifulSoup
+import re
 
 class GemmaSummarizerEngine(SummarizerEngine):
     def __init__(self):
@@ -40,7 +41,7 @@ class GemmaSummarizerEngine(SummarizerEngine):
     def summarize(self, ocr_text: str, document_urls: List[str]) -> str:
         print(f"--- [ENGINE: Gemma Summarizer] Summarizing content from {len(document_urls)} URLs, one at a time ---")
 
-        all_summaries = []
+        summary_objects = []
 
         for i, url in enumerate(document_urls):
             print(f"  - Summarizing ({i+1}/{len(document_urls)}): {url}")
@@ -48,7 +49,9 @@ class GemmaSummarizerEngine(SummarizerEngine):
 
             if not content:
                 summary = "Could not retrieve content from URL."
+                rating = "0/10"
             else:
+                # First API call for summary
                 chat = [
                     { "role": "user", "content": f"Please provide a concise summary of the following text in the document's main language:\n\n---\n{content}\n---" },
                 ]
@@ -67,22 +70,66 @@ class GemmaSummarizerEngine(SummarizerEngine):
                 
                 response = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-                # Extract only the generated part of the response
                 response_start_index = response.find(chat[0]['content']) + len(chat[0]['content'])
                 model_response = response[response_start_index:].strip()
                 
-                # The model might add extra text, so we look for the part after "model"
                 model_keyword_index = model_response.find('model')
                 if model_keyword_index != -1:
                     model_response = model_response[model_keyword_index+len('model'):].strip()
 
                 summary = model_response if model_response else "Failed to generate a summary."
 
-            # Format the output for each URL
-            formatted_output = f"[URL {i+1}: {url}]\r\n[SUMMARY: {summary}]\r\n\r\n"
-            all_summaries.append(formatted_output)
+                # Second API call for rating
+                rating_chat = [
+                    { "role": "user", "content": f"Here is the original text: '{ocr_text}'. Here is a summary of a document: '{summary}'. Please rate the relevance of the summary to the original text on a scale of 1-10 and return only the rating in the format 'X/10'." },
+                ]
 
-        if not all_summaries:
+                rating_prompt = self.tokenizer.apply_chat_template(rating_chat, tokenize=False, add_generation_prompt=True)
+                rating_inputs = self.tokenizer(rating_prompt, return_tensors="pt").to(self.model.device)
+
+                rating_outputs = self.model.generate(
+                    **rating_inputs,
+                    max_new_tokens=10,
+                    temperature=0.2,
+                    do_sample=False
+                )
+
+                rating_response = self.tokenizer.decode(rating_outputs[0], skip_special_tokens=True)
+                
+                rating_response_start_index = rating_response.find(rating_chat[0]['content']) + len(rating_chat[0]['content'])
+                rating_model_response = rating_response[rating_response_start_index:].strip()
+
+                rating_model_keyword_index = rating_model_response.find('model')
+                if rating_model_keyword_index != -1:
+                    rating_model_response = rating_model_response[rating_model_keyword_index+len('model'):].strip()
+
+                # Extract rating using regex
+                rating_match = re.search(r'(\d{1,2}/10)', rating_model_response)
+                rating = rating_match.group(1) if rating_match else "0/10"
+
+            try:
+                rating_value = int(rating.split('/')[0])
+            except (ValueError, IndexError):
+                rating_value = 0
+
+            summary_objects.append({
+                "url": url,
+                "summary": summary,
+                "rating": rating,
+                "rating_value": rating_value
+            })
+
+        if not summary_objects:
             return "No content could be summarized."
 
-        return "".join(all_summaries).strip()
+        # Sort the summaries by rating in descending order
+        summary_objects.sort(key=lambda x: x["rating_value"], reverse=True)
+
+        # Format the final output string
+        formatted_output = ""
+        for i, summary_obj in enumerate(summary_objects):
+            formatted_output += f"[URL {i+1}: {summary_obj['url']}]\r\n"
+            formatted_output += f"RATING: {summary_obj['rating']}\r\n"
+            formatted_output += f"SUMMARY: {summary_obj['summary']}\r\n\r\n"
+
+        return formatted_output.strip()
