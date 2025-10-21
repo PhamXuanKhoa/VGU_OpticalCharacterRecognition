@@ -6,13 +6,12 @@ from google.api_core import exceptions
 from services.ocr_interface import OCREngine
 
 class GeminiOCREngine(OCREngine):
-            def __init__(self):
-                gemini_api_key = os.getenv("GEMINI_API_KEY")
-                if not gemini_api_key:
-                    print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API calls may fail.")
-                else:
-                    genai.configure(api_key=gemini_api_key)
-                self.client = genai.Client()
+    def __init__(self):
+        gemini_api_key = os.getenv("GEMINI_API_KEY")
+        if not gemini_api_key:
+            print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API calls may fail.")
+        self.client = genai.Client(api_key=gemini_api_key)
+
     def extract_text(self, image_path: str) -> str:
         print(f"--- [ENGINE: Google Gemini OCR] Processing image at {image_path} ---")
         

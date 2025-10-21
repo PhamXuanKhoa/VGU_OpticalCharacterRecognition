@@ -13,9 +13,7 @@ class GeminiSummarizerEngine(SummarizerEngine):
         gemini_api_key = os.getenv("GEMINI_API_KEY")
         if not gemini_api_key:
             print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API calls may fail.")
-        else:
-            genai.configure(api_key=gemini_api_key)
-        self.client = genai.Client()
+        self.client = genai.Client(api_key=gemini_api_key)
 
     def _fetch_and_clean_content(self, url: str) -> str:
         try:

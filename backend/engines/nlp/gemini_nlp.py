@@ -11,9 +11,7 @@ class GeminiNLPEngine(NLPEngine):
         gemini_api_key = os.getenv("GEMINI_API_KEY")
         if not gemini_api_key:
             print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API calls may fail.")
-        else:
-            genai.configure(api_key=gemini_api_key)
-        self.client = genai.Client()
+        self.client = genai.Client(api_key=gemini_api_key)
 
     def find_keywords(self, text: str) -> List[str]:
         print(f"--- [ENGINE: Google Gemini NLP] Finding keywords in text: '{text[:50]}...' ---")
