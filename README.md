@@ -9,7 +9,7 @@ The application allows users to upload images, extract text using various OCR en
 We provide two versions of the application as pre-built Docker images from GitHub Container Registry (GHCR):
 
 *   `latest-full`: A comprehensive image with all models pre-installed for immediate, full functionality. (~2.7 GB download size)
-*   `latest-slim`: A lightweight image that does not pre-install the Stanford NLP, VietOCR, and EasyOCR models. These will be downloaded on their first use, which may cause an initial delay. (~1.8 GB download size)
+*   `latest-slim`: A lightweight image that does not pre-install the Stanford NLP, VietOCR, and EasyOCR models. These will be downloaded on their first use, which may cause an initial delay. (~1 GB download size)
 
 ### **Prerequisites**
 
