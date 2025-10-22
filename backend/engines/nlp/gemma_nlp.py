@@ -8,7 +8,13 @@ class GemmaNLPEngine(NLPEngine):
     def __init__(self):
         # Set the model ID
         model_id = "google/gemma-3-270m-it"
-        token = os.getenv("HUGGING_FACE_HUB_TOKEN")
+        token = None
+        token_file_path = "/app/hugging_face_token.txt"
+        if os.path.exists(token_file_path):
+            with open(token_file_path, "r") as f:
+                token = f.read().strip()
+        if not token:
+            token = os.getenv("HUGGING_FACE_HUB_TOKEN")
 
         # Load the tokenizer and model
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)

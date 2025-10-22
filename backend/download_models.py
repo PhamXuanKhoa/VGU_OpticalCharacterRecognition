@@ -12,16 +12,16 @@ from engines.nlp.gemma_nlp import GemmaNLPEngine
 if __name__ == "__main__":
     build_version = os.environ.get("BUILD_VERSION", "full")
 
-    print("--- Initializing GemmaNLPEngine to trigger model download ---")
-    try:
-        # This model is downloaded in all versions
-        nlp_engine = GemmaNLPEngine()
-        print("Gemma NLP model download (if necessary) and initialization successful.")
-    except Exception as e:
-        print(f"Error during Gemma NLP model download/initialization: {e}")
-        sys.exit(1)
-
     if build_version == "full":
+        print("--- Initializing GemmaNLPEngine to trigger model download ---")
+        try:
+            # This model is downloaded only in full version
+            nlp_engine = GemmaNLPEngine()
+            print("Gemma NLP model download (if necessary) and initialization successful.")
+        except Exception as e:
+            print(f"Error during Gemma NLP model download/initialization: {e}")
+            sys.exit(1)
+
         print("\n--- Initializing StanfordNLPEngine to trigger model download ---")
         try:
             # Initializing the engine will trigger the model download if not present
