@@ -13,10 +13,9 @@ if __name__ == "__main__":
     build_version = os.environ.get("BUILD_VERSION", "full")
 
     if build_version == "full":
-
         print("--- Initializing GemmaNLPEngine to trigger model download ---")
         try:
-            # This model is downloaded in all versions
+            # This model is downloaded only in full version
             nlp_engine = GemmaNLPEngine()
             print("Gemma NLP model download (if necessary) and initialization successful.")
         except Exception as e:
