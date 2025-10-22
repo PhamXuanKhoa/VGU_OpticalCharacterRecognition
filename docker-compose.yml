@@ -12,7 +12,13 @@ services:
       - GEMINI_API_KEY=your_gemini_api_key_here # Replace with your actual Gemini API key (no need for " ")
     networks:
       - app-network
+    secrets:
+      - hugging_face_token
 
 networks:
   app-network:
     driver: bridge
+
+secrets:
+  hugging_face_token:
+    file: ./hugging_face_token.txt

@@ -15,9 +15,6 @@ FROM python:3.10-slim-bookworm
 ARG BUILD_VERSION=full
 ENV BUILD_VERSION=${BUILD_VERSION}
 
-ARG HUGGING_FACE_HUB_TOKEN_RUNTIME
-ENV HUGGING_FACE_HUB_TOKEN=${HUGGING_FACE_HUB_TOKEN_RUNTIME}
-
 WORKDIR /app
 
 # Install system dependencies
@@ -39,11 +36,15 @@ RUN python -m spacy download en_core_web_sm
 # Copy backend code
 COPY backend/ ./
 
-# Download models during build
+# Conditional handling of HUGGING_FACE_HUB_TOKEN and model downloads
 RUN --mount=type=secret,id=HUGGING_FACE_HUB_TOKEN,dst=/run/secrets/hugging_face_token \
-    export HUGGING_FACE_HUB_TOKEN=$(cat /run/secrets/hugging_face_token) && \
-    python ./download_models.py && \
-    rm ./download_models.py
+    if [ "${BUILD_VERSION}" = "slim" ]; then \
+        cat /run/secrets/hugging_face_token > /app/hugging_face_token.txt; \
+    elif [ "${BUILD_VERSION}" = "full" ]; then \
+        export HUGGING_FACE_HUB_TOKEN=$(cat /run/secrets/hugging_face_token) && \
+        python ./download_models.py && \
+        rm ./download_models.py; \
+    fi
 
 # Copy frontend build artifacts
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
