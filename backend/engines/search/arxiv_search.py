@@ -20,22 +20,21 @@ class ArxivSearchEngine(SearchEngine):
         all_links = set()
         client = arxiv.Client()
 
-        # Determine how many links to fetch for each keyword
         links_per_kw = TOTAL_LINKS // num_keywords if num_keywords > 0 else 0
         remainder = TOTAL_LINKS % num_keywords if num_keywords > 0 else 0
 
         print(f"--- [ENGINE: arXiv Library] Distributing {TOTAL_LINKS} links among {num_keywords} keywords. ---")
 
         for i, keyword in enumerate(keywords):
-            # The first 'remainder' keywords get one extra link slot
+
             num_to_fetch = links_per_kw + (1 if i < remainder else 0)
             
-            # If there are more keywords than links, just get 1 link for the first 10 keywords
+
             if num_keywords > TOTAL_LINKS:
                 if i < TOTAL_LINKS:
                     num_to_fetch = 1
                 else:
-                    # No need to search for keywords beyond the 10th one
+
                     break
             
             if num_to_fetch == 0:

@@ -22,13 +22,13 @@ class DuckDuckGoEduEngine(SearchEngine):
 
         with DDGS() as ddgs:
             if num_keywords > TOTAL_LINKS:
-                # --- Logic for more keywords than links ---
+
                 print("--- More keywords than slots. Using random selection logic. ---")
                 available_keywords = list(keywords)
                 initial_search_keywords = random.sample(available_keywords, TOTAL_LINKS)
                 leftover_keywords = [kw for kw in available_keywords if kw not in initial_search_keywords]
 
-                # 1. Initial Pass
+
                 for keyword in initial_search_keywords:
                     try:
                         query = keyword + site_filter
@@ -38,7 +38,7 @@ class DuckDuckGoEduEngine(SearchEngine):
                     except Exception as e:
                         print(f"Error searching DDG for keyword '{keyword}': {e}")
 
-                # 2. Fill-Up Pass
+
                 if len(all_links) < TOTAL_LINKS:
                     print(f"--- Found {len(all_links)} links, filling up to {TOTAL_LINKS}... ---")
                     random.shuffle(leftover_keywords)
@@ -53,7 +53,7 @@ class DuckDuckGoEduEngine(SearchEngine):
                         except Exception as e:
                             print(f"Error searching DDG for keyword '{keyword}': {e}")
             else:
-                # --- Logic for fewer keywords than links (Fair Distribution) ---
+
                 print("--- Fewer keywords than slots. Using fair distribution logic. ---")
                 links_per_kw = TOTAL_LINKS // num_keywords
                 remainder = TOTAL_LINKS % num_keywords
