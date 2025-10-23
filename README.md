@@ -109,6 +109,7 @@ The application supports a variety of engines for different tasks, allowing user
 *   **DuckDuckGo**: Provide the top 5 links from DuckDuckGo.
 *   **DuckDuckGo Long**: Provides more links for each keyword, up to 20 links
 *   **DuckDuckGo Edu**: Filters DuckDuckGo search results for educational domains.
+*   **Google Search**: Using the Google search engine (required an API key)
 *   **Arxiv Search**: Searches for academic papers and preprints on ArXiv.
 
 ### **Summarization Engines**
