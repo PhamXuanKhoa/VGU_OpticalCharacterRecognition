@@ -18,7 +18,7 @@ class GoogleSearchEngine(SearchEngine):
             return ["Error: Google API credentials are not configured."]
 
 
-        query = " ".join(keywords)
+        query = " OR ".join(keywords)
         print(f"--- [ENGINE: Google Search API] Searching for: '{query}' ---")
         
         try:
