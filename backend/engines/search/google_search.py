@@ -26,7 +26,9 @@ class GoogleSearchEngine(SearchEngine):
             result = self.service.cse().list(
                 q=query,
                 cx=self.cse_id,
-                num=10
+                num=10,
+                lr='lang_vi',
+                hl='vi'
             ).execute()
 
 
