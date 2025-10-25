@@ -137,7 +137,7 @@ The application supports a variety of engines for different tasks, allowing user
 
 ## Credits
 
-This project was developed through the collaborative efforts of:
+This was developed through the collaborative efforts of:
 
 *   **[@minhle-120](https://github.com/minhle-120):** Backend development, including the FastAPI implementation and integration of engines.
 *   **[@PhamXuanKhoa](https://www.github.com/PhamXuanKhoa):** Frontend development, including UI/UX design and the creation of React components.
