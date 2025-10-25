@@ -1,6 +1,6 @@
 # VGU_OpticalCharacterRecognition
 
-VGU_OpticalCharacterRecognition is a comprehensive, full-stack application designed for advanced Optical Character Recognition (OCR) and document processing. It integrates a Python FastAPI backend with a React/Vite frontend to provide a robust platform for text extraction, analysis, and document management.
+VGU_OpticalCharacterRecognition is an application designed for advanced Optical Character Recognition (OCR) and document processing. It integrates a Python FastAPI backend with a React/Vite frontend to provide a robust platform for text extraction, analysis, and finding related documents.
 
 The application allows users to upload images, extract text using various OCR engines, identify key terms with Natural Language Processing (NLP), discover related articles through integrated search functionalities, and generate concise summaries of the content.
 
@@ -8,7 +8,7 @@ The application allows users to upload images, extract text using various OCR en
 
 We provide two versions of the application as pre-built Docker images from GitHub Container Registry (GHCR):
 
-*   `latest-full`: A comprehensive image with all models pre-installed for immediate, full functionality. (~2.7 GB download size)
+*   `latest-full`: An image with all models pre-installed for immediate, full functionality. (~2.7 GB download size)
 *   `latest-slim`: A lightweight image that does not pre-install the Stanford NLP, VietOCR,  EasyOCR and Gemma models. These will be downloaded on their first use, which may cause an initial delay. (~1 GB download size)
 
 ### **Prerequisites**
@@ -123,7 +123,6 @@ The application supports a variety of engines for different tasks, allowing user
 *   **FastAPI**: High-performance web framework for building APIs.
 *   **Uvicorn**: ASGI server for running FastAPI applications.
 *   **Requests & BeautifulSoup4**: Libraries for web scraping and search functionalities.
-*   **Pillow**: Image processing library for handling image manipulations.
 
 ### **Frontend**
 *   **React**: JavaScript library for building user interfaces.
