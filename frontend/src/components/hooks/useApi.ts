@@ -173,8 +173,12 @@ export const useApi = () => {
             });
             setIsDoneProcessing(true);
             setIsSuccessDialogOpen(true);
-            const audio = new Audio('https://www.myinstants.com/media/sounds/ding-sound-effect_1_CVUaI0C.mp3');
-            audio.play();
+            try {
+                const audio = new Audio('https://www.myinstants.com/media/sounds/ding-sound-effect_1_CVUaI0C.mp3');
+                audio.play();
+            } catch (audioError) {
+                console.error("Failed to play notification sound:", audioError);
+            }
         } catch (error) {
             console.error("An error occurred during processing:", error);
         } finally {
