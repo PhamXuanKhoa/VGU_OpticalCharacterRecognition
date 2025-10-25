@@ -114,7 +114,7 @@ The application supports a variety of engines for different tasks, allowing user
 
 ### **Summarization Engines**
 *   **Gemini**: High-quality text summarization using Google's Gemini.
-*   **Gemma**: Text summarization using Google's Gemma models. (quite slow with long text) (https://huggingface.co/google/gemma-3-270m-it)
+*   **Gemma**: Text summarization using Google's Gemma models. (quite slow and inaccurate with long text) (https://huggingface.co/google/gemma-3-270m-it)
 
 ## Technology Stack
 
