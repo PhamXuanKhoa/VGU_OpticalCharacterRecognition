@@ -173,7 +173,7 @@ export const useApi = () => {
             });
             setIsDoneProcessing(true);
             setIsSuccessDialogOpen(true);
-            const audio = new Audio('https://www.myinstants.com/media/sounds/ghe-chua-ghe-chua.mp3');
+            const audio = new Audio('https://www.myinstants.com/media/sounds/ding-sound-effect_1_CVUaI0C.mp3');
             audio.play();
         } catch (error) {
             console.error("An error occurred during processing:", error);
