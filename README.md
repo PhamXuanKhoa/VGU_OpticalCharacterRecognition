@@ -77,6 +77,18 @@ To remove the container, run:
 docker rm vgu_ocr_app
 ```
 
+To delete the downloaded Docker image, use the `docker rmi` command with the image name.
+
+*For the full version:*
+```bash
+docker rmi ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-full
+```
+
+*For the slim version:*
+```bash
+docker rmi ghcr.io/phamxuankhoa/vgu_opticalcharacterrecognition:latest-slim
+```
+
 ## Features
 
 *   **Image Upload and Processing**: Interface for uploading images for OCR processing.
