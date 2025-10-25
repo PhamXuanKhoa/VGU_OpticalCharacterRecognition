@@ -63,6 +63,8 @@ Once the container is running, the application will be accessible.
 *   **Frontend Application**: Open your web browser and navigate to `http://localhost:5173`.
 *   **Backend API Documentation**: The backend API documentation is available at `http://localhost:8000/docs`.
 
+Note: refresh the page if you cant load the engines
+
 ### **Stopping the Application**
 
 To stop the application, run:
